@@ -10,26 +10,7 @@ import ReactJson from "react-json-view";
 import ExpansionTable from "../ExpansionTable/ExpansionTable";
 import MarkdownDescription from "../MarkdownDescription/MarkdownDescription";
 
-const styles = (theme: Theme) => ({
-  description: {
-    color: theme.palette.text.primary,
-  },
-  heading: {
-    flexBasis: "33.33%",
-    flexShrink: 0,
-    fontSize: theme.typography.pxToRem(15),
-  },
-  paramsMargin: {
-    marginTop: theme.spacing(2),
-  },
-  secondaryHeading: {
-    alignSelf: "end",
-    color: theme.palette.text.secondary,
-    fontSize: theme.typography.pxToRem(15),
-  },
-});
-
-interface IProps extends WithStyles<typeof styles> {
+interface IProps {
   servers?: ServerObject[];
   uiSchema?: any;
   reactJsonOptions?: any;
@@ -38,48 +19,47 @@ interface IProps extends WithStyles<typeof styles> {
 
 class Servers extends Component<IProps> {
   public render() {
-    const { servers, noTitle, reactJsonOptions, uiSchema, classes } = this.props;
+    const { servers, noTitle, reactJsonOptions, uiSchema } = this.props;
     if (!servers || servers.length === 0) {
       return null;
     }
     return (
       <>
-        {noTitle ? null : <Typography variant="h2">Servers</Typography>}
+        {noTitle ? null : <h2>Servers</h2>}
         <ExpansionTable headers={["Name", "Url", "Summary"]}>
-          <TableRow>
-            <TableCell colSpan={6}>
+          <tr>
+            <td colSpan={6}>
               {servers.map((server, i) => (
                 <div style={{ width: "100%" }} key={i}>
-                  <ExpansionPanel
-                    style={{ width: "100%" }}
-                    defaultExpanded={uiSchema && uiSchema.servers["ui:defaultExpanded"]} key={i}>
-                    <ExpansionPanelSummary
-                      style={{ justifyContent: "space-between" }} key="servers-header" expandIcon={<ExpandMoreIcon />}>
-                      <Typography className={classes.heading}>{server.name}</Typography>
-                      <Typography className={classes.secondaryHeading}>{server.url}</Typography>
-                      <Typography className={classes.secondaryHeading}>{server.summary}</Typography>
-                    </ExpansionPanelSummary>
-                    <ExpansionPanelDetails style={{ display: "block" }} key="servers-body">
+                  <details open={uiSchema && uiSchema.servers["ui:defaultExpanded"]}>
+                    <summary style={{ justifyContent: "space-between" }}>
+                      <span>{server.name}</span>
+                      <span>{server.url}</span>
+                      <span>{server.summary}</span>
+                    </summary>
+                    <div style={{ display: "block" }}>
                       {server.description &&
                         <MarkdownDescription
                           uiSchema={uiSchema}
                           source={server.description}
-                          className={classes.description}
                         />
                       }
-                      {server.variables &&
-                        <Typography variant="h6" gutterBottom className={classes.paramsMargin}>Variables</Typography>}
+                      {server.variables && <>
+                        <h6>Variables</h6>
+                        <br />
+                      </>
+                      }
                       {server.variables && <ReactJson src={server.variables} {...reactJsonOptions} />}
-                    </ExpansionPanelDetails>
-                  </ExpansionPanel>
+                    </div>
+                  </details>
                 </div>
               ))}
-            </TableCell>
-          </TableRow>
+            </td>
+          </tr>
         </ExpansionTable>
       </>
     );
   }
 }
 
-export default withStyles(styles)(Servers);
+export default Servers;

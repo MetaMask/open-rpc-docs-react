@@ -3,11 +3,14 @@ import ReactDOM from "react-dom";
 import ExamplePairing from "./ExamplePairing";
 import examples from "@open-rpc/examples";
 import refParser from "json-schema-ref-parser";
-import { MethodObject, OpenrpcDocument, ExamplePairingObject } from "@open-rpc/meta-schema";
+import { MethodObject, OpenrpcDocument, ExamplePairingObject, MethodObjectExamples } from "@open-rpc/meta-schema";
 
 it("renders handles no method", async () => {
   const div = document.createElement("div");
-  ReactDOM.render(<ExamplePairing methodName={undefined} examplePairing={{} as any} />, div);
+  ReactDOM.render(
+    <ExamplePairing examplePairing={{} as any} />,
+    div,
+  );
   expect(div.innerHTML).toBe("");
   ReactDOM.unmountComponentAtNode(div);
 });
@@ -21,11 +24,12 @@ it("renders handles no method examples", async () => {
 
 it("renders examples", async () => {
   const div = document.createElement("div");
-  const simpleMath = await refParser.dereference(examples.simpleMath) as OpenrpcDocument;
+  const simpleMath = await refParser.dereference(examples.simpleMath as any) as OpenrpcDocument;
+  const method = simpleMath.methods[0] as MethodObject;
   ReactDOM.render(
     <ExamplePairing
-      methodName={simpleMath.methods[0].name}
-      examplePairing={simpleMath.methods[0].examples && simpleMath.methods[0].examples[0] as any}
+      methodName={method.name}
+      examplePairing={method.examples && method.examples[0] as any}
     />
     , div);
   expect(div.innerHTML.includes("2")).toBe(true);
@@ -66,10 +70,11 @@ it("renders examples with params by-name", async () => {
       },
     },
   };
+  const methodExamples = method.examples as MethodObjectExamples;
   ReactDOM.render(
     <ExamplePairing
       methodName={method.name}
-      examplePairing={method.examples && method.examples[0] as ExamplePairingObject}
+      examplePairing={methodExamples[0] as ExamplePairingObject}
       paramStructure={method.paramStructure || "by-position"} />
     , div);
   expect(div.innerHTML.includes("foo")).toBe(true);

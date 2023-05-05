@@ -134,13 +134,14 @@ const SchemaRenderer: React.FC<IProps> = ({ schema, required, name }) => {
               {schema.properties &&
                 Object.entries(schema.properties)
                   .map(([n, prop]: [string, JSONSchema4], i: number) => {
+                    const req = schema.required === undefined ? false : (schema.required as string[]).includes(n);
                     return (
                       <JSONSchemaFields
                         key={n}
                         schema={prop}
                         name={n}
                         hideHeader={true}
-                        required={schema.required && schema.required.includes(n)}
+                        required={req}
                       />
                     );
                   })}

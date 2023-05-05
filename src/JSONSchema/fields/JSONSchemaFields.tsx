@@ -42,12 +42,12 @@ class JSONSchemaFields extends Component<IProps> {
               </TableRow>
             </TableHead>
             <TableBody>
-              <SchemaRenderer schema={schema} required={required} name={name} />
+              <SchemaRenderer schema={schema || {}} required={!!required} name={name || ""} />
             </TableBody>
           </Table>
         }
         {hideHeader &&
-          <SchemaRenderer schema={schema} required={required} name={name} />
+         <SchemaRenderer schema={schema || {}} required={!!required} name={name || ""} />
         }
       </>
     );

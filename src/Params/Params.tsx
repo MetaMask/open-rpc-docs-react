@@ -53,7 +53,7 @@ class Params extends Component<IProps> {
                     key={row.name}
                     contentDescriptor={row}
                     uiSchema={uiSchema}
-                    disableTransitionProps={this.props.disableTransitionProps}
+                    disableTransitionProps={!!this.props.disableTransitionProps}
                   />,
                 )
               }

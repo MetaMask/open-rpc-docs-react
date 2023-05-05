@@ -10,7 +10,7 @@ interface IProps {
 class JSONSchema extends Component<IProps> {
   public render() {
     const { schema } = this.props;
-    return <JSONSchemaFields schema={schema} />;
+    return <JSONSchemaFields schema={schema || {}} />;
   }
 }
 

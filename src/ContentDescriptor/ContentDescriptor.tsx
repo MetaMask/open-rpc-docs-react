@@ -46,7 +46,7 @@ class ContentDescriptor extends Component<IProps> {
         style={{ width: "100%" }}
         TransitionProps={{unmountOnExit: disableTransitionProps ? false : true}}
         defaultExpanded={uiSchema && uiSchema.params["ui:defaultExpanded"]}
-        expanded={contentDescriptor.name ? undefined : true}>
+        expanded={contentDescriptor.name ? false : true}>
         <ExpansionPanelSummary
           expandIcon={(!contentDescriptor.name || hideIcon) ? null : <ExpandMoreIcon />}
           style={{ justifyContent: "space-between" }}>

@@ -26,13 +26,13 @@ export default class Documentation extends React.Component<IProps> {
     return (
       <>
         <Info schema={schema} />
-        <Servers servers={schema.servers} reactJsonOptions={reactJsonOptions} />
+        <Servers servers={schema.servers || []} reactJsonOptions={reactJsonOptions} />
         <Methods
-          onMethodToggle={onMethodToggle}
+          onMethodToggle={onMethodToggle as any}
           schema={schema}
           uiSchema={uiSchema}
           reactJsonOptions={reactJsonOptions}
-          methodPlugins={this.props.methodPlugins}
+          methodPlugins={this.props.methodPlugins || []}
         />
         {shouldShowContentDescriptors &&
           <ContentDescriptors schema={schema} uiSchema={uiSchema}></ContentDescriptors>

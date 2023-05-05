@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import ContentDescriptor from "../ContentDescriptor/ContentDescriptor";
-import { Typography } from "@material-ui/core";
 import { OpenrpcDocument, ContentDescriptorObject } from "@open-rpc/meta-schema";
 
 interface IProps {
@@ -17,12 +16,12 @@ export default class ContentDescriptors extends Component<IProps> {
     if (entries.length === 0) { return null; }
     return (
       <>
-        <Typography variant="h3" gutterBottom>ContentDescriptors</Typography>
+        <h3>ContentDescriptors</h3>
         {entries.map(([key, val]) => {
           return <ContentDescriptor
             key={key}
             contentDescriptor={val as ContentDescriptorObject}
-            disableTransitionProps={disableTransitionProps}
+            disableTransitionProps={disableTransitionProps || false}
             uiSchema={this.props.uiSchema}
             hideRequired={true} />;
         })}

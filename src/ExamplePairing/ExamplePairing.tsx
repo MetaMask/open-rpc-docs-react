@@ -3,15 +3,13 @@ import Grid from "@material-ui/core/Grid";
 import { Card, CardContent, CardHeader, Theme, withStyles, WithStyles } from "@material-ui/core";
 import ReactJson from "react-json-view";
 import ReactMarkdown from "react-markdown";
-import { ExampleObject, ExamplePairingObject } from "@open-rpc/meta-schema";
+import { ExampleObject, ExamplePairingObject, MethodObjectParamStructure, ExamplePairingObjectResult } from "@open-rpc/meta-schema";
 import _ from "lodash";
 import MarkdownDescription from "../MarkdownDescription/MarkdownDescription";
 
-export type TParamStructure = "either" | "by-name" | "by-position";
-
 interface IProps extends WithStyles<typeof styles> {
   examplePairing?: ExamplePairingObject;
-  paramStructure?: TParamStructure;
+  paramStructure?: MethodObjectParamStructure;
   methodName?: string;
   uiSchema?: any;
   reactJsonOptions?: any;
@@ -44,7 +42,7 @@ class ExamplePairing extends Component<IProps, {}> {
         <Grid item xs={12}>
           <MarkdownDescription
             uiSchema={uiSchema}
-            source={examplePairing.description}
+            source={examplePairing.description || ""}
             className={classes.description}
           />
         </Grid>

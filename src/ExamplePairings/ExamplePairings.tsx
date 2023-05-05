@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ExamplePairing from "../ExamplePairing/ExamplePairing";
 import { Typography, List, ListItem, ListItemText, Grid, MenuItem, Menu, withStyles, ExpansionPanelDetails } from "@material-ui/core";
-import { MethodObject, ExamplePairingObject, ContentDescriptorObject, ReferenceObject } from "@open-rpc/meta-schema";
+import { MethodObject, ExamplePairingObject, ContentDescriptorObject, ReferenceObject, MethodObjectParamStructure } from "@open-rpc/meta-schema";
 
 interface IProps {
   method?: MethodObject;
@@ -24,7 +24,8 @@ const getExamplesFromMethod = (method?: MethodObject): ExamplePairingObject[] =>
   (method.params as ContentDescriptorObject[]).forEach((param, index: number) => {
     if (param.schema && param.schema.examples && param.schema.examples.length > 0) {
       param.schema.examples.forEach((ex: any, i: number) => {
-        if (!examples[i]) {
+        const example = examples[i];
+        if (example === undefined) {
           examples.push({
             name: "generated-example",
             params: [
@@ -39,7 +40,7 @@ const getExamplesFromMethod = (method?: MethodObject): ExamplePairingObject[] =>
             },
           });
         } else {
-          examples[i].params.push({
+          example.params.push({
             name: param.name,
             value: ex,
           });
@@ -50,7 +51,8 @@ const getExamplesFromMethod = (method?: MethodObject): ExamplePairingObject[] =>
   const methodResult = method.result as ContentDescriptorObject;
   if (methodResult && methodResult.schema && methodResult.schema.examples && methodResult.schema.examples.length > 0) {
     methodResult.schema.examples.forEach((ex: any, i: number) => {
-      if (!examples[i]) {
+      const example = examples[i];
+      if (example === undefined) {
         examples.push({
           name: "generated-example",
           params: [],
@@ -60,7 +62,7 @@ const getExamplesFromMethod = (method?: MethodObject): ExamplePairingObject[] =>
           },
         });
       } else {
-        examples[i].result = {
+        example.result = {
           name: methodResult.name,
           value: ex,
         };
@@ -82,8 +84,12 @@ class ExamplePairings extends Component<IProps, IState> {
     if (!this.props || !this.props.examples) {
       return;
     }
+    const firstExample = this.props.examples[0];
+    if (firstExample === undefined) {
+      return;
+    }
     this.setState({
-      currentExample: this.props.examples[0],
+      currentExample: firstExample,
     });
   }
   public handleClickListItem = (event: React.MouseEvent) => {
@@ -105,6 +111,10 @@ class ExamplePairings extends Component<IProps, IState> {
     if (!examples || examples.length === 0) {
       return null;
     }
+    const paramStructure = this.props.method && this.props.method.paramStructure as MethodObjectParamStructure || "either";
+
+    const selectedExample = examples[this.state.selectedIndex];
+    if (selectedExample === undefined) { return null; }
     return (
       <ExpansionPanelDetails key="examples">
         <Grid container>
@@ -120,8 +130,8 @@ class ExamplePairings extends Component<IProps, IState> {
                 aria-label="Method Examples"
                 onClick={this.handleClickListItem}>
                 <ListItemText
-                  primary={examples[this.state.selectedIndex].name}
-                  secondary={examples[this.state.selectedIndex].summary} />
+                  primary={selectedExample.name}
+                  secondary={selectedExample.summary} />
               </ListItem>
               <Menu
                 id="menu-menu"
@@ -145,9 +155,9 @@ class ExamplePairings extends Component<IProps, IState> {
             {examples &&
               <ExamplePairing
                 uiSchema={uiSchema}
-                paramStructure={this.props.method && this.props.method.paramStructure}
-                examplePairing={examples[this.state.selectedIndex]}
-                methodName={this.props.method && this.props.method.name}
+                paramStructure={paramStructure}
+                examplePairing={examples[this.state.selectedIndex] as ExamplePairingObject}
+                methodName={this.props.method && this.props.method.name as any}
                 reactJsonOptions={this.props.reactJsonOptions} />}
           </Grid>
         </Grid>

@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import Methods, { IMethodPluginProps } from "./Methods";
-import { OpenrpcDocument } from "@open-rpc/meta-schema";
+import { OpenrpcDocument, MethodObject } from "@open-rpc/meta-schema";
 import {
   cleanup,
   fireEvent,
@@ -434,14 +434,15 @@ it("can call onMethodToggle when a method is clicked", (done) => {
   const { getByText } = render(
     <Methods
       schema={schema as any}
-      onMethodToggle={(method: string, expanded: boolean) => {
-        expect(method).toEqual("foo");
+      onMethodToggle={(m: string, expanded: boolean) => {
+        expect(m).toEqual("foo");
         expect(expanded).toEqual(true);
         cleanup();
         done();
       }}
     />,
   );
-  const node = getByText(schema.methods[0].name);
+  const method = schema.methods[0] as MethodObject;
+  const node = getByText(method.name);
   fireEvent.click(node);
 });

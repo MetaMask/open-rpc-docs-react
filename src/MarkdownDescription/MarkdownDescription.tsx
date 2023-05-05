@@ -13,7 +13,7 @@ const MarkdownDescription: React.FC<IProps> = ({ source, className, uiSchema }) 
   return (
     <ReactMarkdown
       renderers={{
-        code: ({ language, value }) => {
+        code: ({ language, value }: any) => {
           if (!value) {
             return <pre><code></code></pre>;
           }
@@ -24,8 +24,8 @@ const MarkdownDescription: React.FC<IProps> = ({ source, className, uiSchema }) 
           />;
         },
       }}
-      source={source}
-      className={className}
+      source={source || ""}
+      className={className || ""}
     />
   );
 };
