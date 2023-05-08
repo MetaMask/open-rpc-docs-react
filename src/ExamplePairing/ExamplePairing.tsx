@@ -1,13 +1,11 @@
 import React, { Component } from "react";
-import Grid from "@material-ui/core/Grid";
-import { Card, CardContent, CardHeader, Theme, withStyles, WithStyles } from "@material-ui/core";
 import ReactJson from "react-json-view";
 import ReactMarkdown from "react-markdown";
 import { ExampleObject, ExamplePairingObject, MethodObjectParamStructure, ExamplePairingObjectResult } from "@open-rpc/meta-schema";
 import _ from "lodash";
 import MarkdownDescription from "../MarkdownDescription/MarkdownDescription";
 
-interface IProps extends WithStyles<typeof styles> {
+interface IProps {
   examplePairing?: ExamplePairingObject;
   paramStructure?: MethodObjectParamStructure;
   methodName?: string;
@@ -15,15 +13,9 @@ interface IProps extends WithStyles<typeof styles> {
   reactJsonOptions?: any;
 }
 
-const styles = (theme: Theme) => ({
-  description: {
-    color: theme.palette.text.primary,
-  },
-});
-
 class ExamplePairing extends Component<IProps, {}> {
   public render() {
-    const { examplePairing, paramStructure, classes, methodName, uiSchema } = this.props;
+    const { examplePairing, paramStructure, methodName, uiSchema } = this.props;
     if (_.isUndefined(examplePairing)) {
       return null;
     }
@@ -38,42 +30,42 @@ class ExamplePairing extends Component<IProps, {}> {
       : (examplePairing.params as ExampleObject[]).map(((p) => p.value));
 
     return (
-      <Grid container spacing={10}>
-        <Grid item xs={12}>
+      <div>
+        <div>
           <MarkdownDescription
             uiSchema={uiSchema}
             source={examplePairing.description || ""}
-            className={classes.description}
+            className="example-pairing-description"
           />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <Card>
-            <CardHeader title="Request"></CardHeader>
-            <CardContent>
+        </div>
+        <div>
+          <div>
+            <span>Request</span>
+            <div>
               {examplePairing.params && <ReactJson src={{
                 id: 1,
                 jsonrpc: "2.0",
                 method: methodName,
                 params,
               }} {...this.props.reactJsonOptions} />}
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <CardHeader title="Result"></CardHeader>
-          <Card>
-            <CardContent>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div>
+            <span>Result</span>
+            <div>
               {examplePairing.result && <ReactJson src={{
                 id: 1,
                 jsonrpc: "2.0",
                 result: (examplePairing.result as ExampleObject).value,
               }} {...this.props.reactJsonOptions} />}
-            </CardContent>
-          </Card>
-        </Grid>
-      </Grid>
+            </div>
+          </div>
+        </div>
+      </div>
     );
   }
 }
 
-export default withStyles(styles)(ExamplePairing);
+export default ExamplePairing;

@@ -1,10 +1,5 @@
 import React, { Component } from "react";
-import { withStyles, WithStyles, Theme } from "@material-ui/core/styles";
-import TableCell from "@material-ui/core/TableCell";
-import TableRow from "@material-ui/core/TableRow";
 import ReactMarkdown from "react-markdown";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import { Typography, ExpansionPanelSummary, ExpansionPanelDetails, ExpansionPanel, Grid } from "@material-ui/core";
 import { ServerObject } from "@open-rpc/meta-schema";
 import ReactJson from "react-json-view";
 import ExpansionTable from "../ExpansionTable/ExpansionTable";

@@ -1,67 +1,44 @@
 import React, { Component } from "react";
-import { withStyles, WithStyles } from "@material-ui/core/styles";
 import _ from "lodash";
-import { Theme } from "@material-ui/core";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import { Typography, Grid } from "@material-ui/core";
 import ReactJson from "react-json-view";
 import { ErrorObject } from "@open-rpc/meta-schema";
+import ExpansionTable from "../ExpansionTable/ExpansionTable";
 
-const styles = (theme: Theme) => ({
-  code: {
-    marginLeft: theme.spacing(2),
-  },
-});
-
-interface IProps extends WithStyles<typeof styles> {
+interface IProps {
   errors?: ErrorObject[];
   reactJsonOptions?: any;
 }
 
 class Errors extends Component<IProps> {
   public render() {
-    const { errors, classes } = this.props;
+    const { errors} = this.props;
     if (!errors || errors.length === 0) {
       return null;
     }
     return (
-      <Grid container>
-        <Grid item xs={12}>
-          <Typography variant="h5">Errors</Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Code</TableCell>
-                <TableCell>Message</TableCell>
-                <TableCell>Data</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {errors.map((row) => (
-                <TableRow key={row.code}>
-                  <TableCell component="th" scope="row">
-                    {row.code}
-                  </TableCell>
-                  <TableCell>{row.message}</TableCell>
-                  <TableCell className={classes.code}>
-                    {_.isObject(row.data) ?
-                      <ReactJson src={row.data} {...this.props.reactJsonOptions} enableClipboard={false} /> : row.data}
-                  </TableCell>
-                </TableRow>
+      <div>
+        <div>
+          <h5>Errors</h5>
+        </div>
+        <div>
+          <ExpansionTable headers={["Code", "Message", "Data"]}>
+            {errors.map((row) => (
+              <tr>
+                <td>
+                  {row.code}
+                </td>
+                <td>{row.message}</td>
+                <td className="error-data">
+                  {_.isObject(row.data) ?
+                   <ReactJson src={row.data} {...this.props.reactJsonOptions} enableClipboard={false} /> : row.data}
+                </td>
+              </tr>
               ))}
-            </TableBody>
-          </Table>
-
-        </Grid>
-      </Grid>
+          </ExpansionTable>
+        </div>
+      </div>
     );
   }
 }
 
-export default withStyles(styles)(Errors);
+export default Errors;

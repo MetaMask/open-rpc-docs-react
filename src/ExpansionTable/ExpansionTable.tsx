@@ -1,8 +1,4 @@
 import React, { Component } from "react";
-import Typography from "@material-ui/core/Typography";
-import Chip from "@material-ui/core/Chip";
-import Button from "@material-ui/core/Button";
-import { Theme } from "@material-ui/core/styles";
 
 interface IProps {
   headers?: string[];

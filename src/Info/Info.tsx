@@ -1,64 +1,50 @@
 import React, { Component } from "react";
-import Typography from "@material-ui/core/Typography";
-import Chip from "@material-ui/core/Chip";
-import Button from "@material-ui/core/Button";
-import { withStyles, Theme, WithStyles } from "@material-ui/core/styles";
 import ReactMarkdown from "react-markdown";
 import { OpenrpcDocument } from "@open-rpc/meta-schema";
 
-const styles = (theme: Theme) => ({
-  button: {
-    margin: theme.spacing(2),
-  },
-  chip: {
-    margin: theme.spacing(2),
-  },
-  description: {
-    color: theme.palette.text.primary,
-    padding: `${theme.spacing(2)}px 0 ${theme.spacing(2)}px 0`,
-  },
-});
-
-interface IProps extends WithStyles<typeof styles> {
+interface IProps {
   schema?: OpenrpcDocument;
 }
 
 class Info extends Component<IProps> {
   public render() {
-    const { schema, classes } = this.props;
+    const { schema} = this.props;
     if (!schema || !schema.info) { return null; }
     const info = schema.info;
     return (
       <>
-        {info.title && <Typography variant="h2" gutterBottom>{info.title}</Typography>}
-        {info.version && <Chip label={info.version}/>}
+        {info.title && <h2>{info.title}</h2>}
+        {info.version && <span><strong>{info.version}</strong></span>}
         {info.license &&
-          info.license.name &&
-          info.license.url &&
-          <Chip
-            component={"a" as any}
-            {...{ href: info.license.url }}
-            className={classes.chip}
-            clickable
-            color="primary"
-            label={info.license.name} />}
-        {info.description && <ReactMarkdown className={classes.description} source={info.description}/>}
+         info.license.name &&
+         info.license.url &&
+         <a href={ info.licence.url }> { info.license.name }</a>
+        }
+        {info.description && <ReactMarkdown className="info-description" source={info.description}/>}
         {info.termsOfService &&
-          <Button className={classes.button} variant="contained" href={info.termsOfService}>Terms Of Service</Button>}
+         <a className="info-termsOfService" href={info.termsOfService}>
+           Terms Of Service
+         </a>
+        }
         {info.contact &&
-          info.contact.url &&
-          info.contact.name &&
-          <Button
-            className={classes.button} variant="contained" href={info.contact.url}>Contact {info.contact.name}</Button>}
+         info.contact.url &&
+         info.contact.name &&
+         <a className="info-contact-url" href={info.contact.url}>
+           Contact {info.contact.name}
+         </a>
+        }
         {info.contact &&
-          info.contact.email &&
-            <Button
-              className={classes.button}
-              variant="contained"
-              href={`mailto:${info.contact.email}`}>Email {info.contact.name}</Button>}
+         info.contact.email &&
+         <a
+           className="info-contact-email"
+           href={`mailto:${info.contact.email}`}
+         >
+           Email {info.contact.email}
+         </a>
+        }
       </>
     );
   }
 }
 
-export default withStyles(styles)(Info);
+export default Info;
