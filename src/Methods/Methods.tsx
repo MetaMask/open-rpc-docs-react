@@ -102,6 +102,7 @@ class Methods extends Component<IProps> {
                  <ContentDescriptor
                    contentDescriptor={method.result as ContentDescriptorObject}
                    defaultExpanded={true}
+                   hideIcon={true}
                    hideRequired={true} uiSchema={uiSchema} />
                </section>
               }

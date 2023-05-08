@@ -10,6 +10,7 @@ export {default as Info} from "./Info/Info";
 export {default as JSONSchema} from "./JSONSchema/JSONSchema";
 export {default as Links} from "./Links/Links";
 export {default as Methods} from "./Methods/Methods";
+export {default as Method} from "./Method/Method";
 export {default as Params} from "./Params/Params";
 export {default as Servers} from "./Servers/Servers";
 export {default as Tags} from "./Tags/Tags";
