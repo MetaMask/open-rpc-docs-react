@@ -1,6 +1,6 @@
 import ExamplePairing from "../ExamplePairing/ExamplePairing";
 import { MethodObject, ExamplePairingObject, ContentDescriptorObject, MethodObjectParamStructure } from "@open-rpc/meta-schema";
-import React, { Component} from 'react';
+import React, { Component} from "react";
 
 interface IProps {
   method?: MethodObject;
@@ -65,18 +65,14 @@ const getExamplesFromMethod = (method?: MethodObject): ExamplePairingObject[] =>
   return examples;
 };
 
-
 class ExamplePairings extends Component<IProps, {selectedIndex: number }> {
+
   constructor(props: IProps) {
     super(props);
     this.state = {
       selectedIndex: 0,
     };
   }
-
-  private handleOptionChange(event: React.ChangeEvent<HTMLSelectElement>) {
-    this.setState({ selectedIndex: parseInt(event.target.value) });
-  };
 
   public render() {
     let { method, examples, uiSchema, reactJsonOptions } = this.props;
@@ -110,6 +106,9 @@ class ExamplePairings extends Component<IProps, {selectedIndex: number }> {
       </div>
     );
   }
-}
+
+  private handleOptionChange(event: React.ChangeEvent<HTMLSelectElement>) {
+    this.setState({ selectedIndex: parseInt(event.target.value) });
+  }}
 
 export default ExamplePairings;
