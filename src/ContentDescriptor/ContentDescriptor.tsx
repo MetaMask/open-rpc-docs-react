@@ -9,29 +9,28 @@ interface IProps {
   contentDescriptor?: ContentDescriptorObject;
   hideIcon?: boolean;
   hideRequired?: boolean;
+  defaultExpanded?: boolean;
   disableTransitionProps?: boolean;
   uiSchema?: any;
 }
 
 class ContentDescriptor extends Component<IProps> {
   public render() {
-    const { contentDescriptor, hideIcon, hideRequired, uiSchema, disableTransitionProps } = this.props;
+    const { contentDescriptor, hideIcon, hideRequired, uiSchema, defaultExpanded } = this.props;
     if (!contentDescriptor) { return null; }
     const entries = Object.entries(contentDescriptor);
     if (entries.length === 0) { return null; }
     return (
       <details
         style={{ width: "100%" }}
-        open={uiSchema && uiSchema.params["ui:defaultExpanded"]}
+        open={typeof defaultExpanded === "undefined"  ? uiSchema && uiSchema.params["ui:defaultExpanded"] : defaultExpanded}
       >
-        <summary style={{ justifyContent: "space-between" }}>
-          <div style={{ display: "flex", justifyContent: "space-between", width: "100%", height: "100%", alignItems: "center" }}>
-            <h6 className="content-descriptor-name">{contentDescriptor.name}</h6>
+        <summary style={{ justifyContent: "space-between", listStyleType: hideIcon ? "none" : undefined }}>
+            <h6 className="content-descriptor-name" style={{display: "inline", marginRight: "3px", cursor: "pointer"}}>{contentDescriptor.name}</h6>
             <span className="content-descriptor-summary">{contentDescriptor.summary}</span>
       {hideRequired ? null : <span className="content-descriptor-summary">
               {contentDescriptor.required ? "true" : "false"}
             </span>}
-          </div>
         </summary>
         <>
           {contentDescriptor.description &&

@@ -53,6 +53,7 @@ class Methods extends Component<IProps> {
                   onMethodToggle(method.name, event.currentTarget.open);
                 }
               }}
+              className="alert alert--info margin-bottom--sm"
               open={
               uiSchema &&
               uiSchema.methods &&
@@ -60,8 +61,8 @@ class Methods extends Component<IProps> {
                (uiSchema.methods["ui:defaultExpanded"] && uiSchema.methods["ui:defaultExpanded"][method.name] === true)
               )
               }>
-              <summary>
-                <h4 key={method.name} className="method-name">{method.name}</h4>
+              <summary style={{cursor: "pointer"}}>
+                <h4 key={method.name} className="method-name" style={{display: "inline", marginRight: "3px"}}>{method.name}</h4>
                 <span key={method.summary} className="method-summary">
                   {method.summary}
                 </span>
@@ -100,6 +101,7 @@ class Methods extends Component<IProps> {
                <section key="result">
                  <ContentDescriptor
                    contentDescriptor={method.result as ContentDescriptorObject}
+                   defaultExpanded={true}
                    hideRequired={true} uiSchema={uiSchema} />
                </section>
               }

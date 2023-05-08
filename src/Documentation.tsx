@@ -5,6 +5,15 @@ import Methods, { IMethodPluginProps, OnMethodToggle } from "./Methods/Methods";
 import ContentDescriptors from "./ContentDescriptors/ContentDescriptors";
 import { OpenrpcDocument } from "@open-rpc/meta-schema";
 
+const defaultReactJsonOptions = {
+  theme: "summerfruit:inverted",
+  collapseStringsAfterLength: 25,
+  displayDataTypes: false,
+  displayObjectSize: false,
+  indentWidth: 2,
+  name: false,
+};
+
 interface IProps {
   schema?: OpenrpcDocument;
   uiSchema?: any;
@@ -31,7 +40,7 @@ export default class Documentation extends React.Component<IProps> {
           onMethodToggle={onMethodToggle as any}
           schema={schema}
           uiSchema={uiSchema}
-          reactJsonOptions={reactJsonOptions}
+          reactJsonOptions={{...defaultReactJsonOptions, ...reactJsonOptions}}
           methodPlugins={this.props.methodPlugins || []}
         />
         {shouldShowContentDescriptors &&

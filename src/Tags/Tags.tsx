@@ -17,12 +17,13 @@ export default class Tags extends Component<IProps> {
         {
           tags.map((tag: any, k: number) => {
             return (
-              <div
+              <span
                 key={tag.name}
+                className="badge"
                 style={{ backgroundColor: hashColor.getColorFromString(tag.name, false) }}
               >
                 {tag.name}
-              </div>
+              </span>
             );
           })
         }
