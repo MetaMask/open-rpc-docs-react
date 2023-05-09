@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import ReactMarkdown from "react-markdown";
+import MarkdownDescription from "../MarkdownDescription/MarkdownDescription";
 import { OpenrpcDocument } from "@open-rpc/meta-schema";
 
 interface IProps {
@@ -20,7 +20,7 @@ class Info extends Component<IProps> {
          info.license.url &&
          <a href={ info.licence.url }> { info.license.name }</a>
         }
-        {info.description && <ReactMarkdown className="info-description" source={info.description}/>}
+        {info.description && <MarkdownDescription uiSchema={{}} className="info-description" source={info.description}/>}
         {info.termsOfService &&
          <a className="info-termsOfService" href={info.termsOfService}>
            Terms Of Service

@@ -16,22 +16,17 @@ class Params extends Component<IProps> {
       return null;
     }
     return (
-      <ExpansionTable headers={["Name", "Summary", "Required"]}>
-        <tr>
-          <td colSpan={6}>
-            {
-              params.map((row) =>
-                <ContentDescriptor
-                  key={row.name}
-                  contentDescriptor={row}
-                  uiSchema={uiSchema}
-                  disableTransitionProps={!!this.props.disableTransitionProps}
-                />,
-              )
-            }
-          </td>
-        </tr>
-      </ExpansionTable>
+      <ol style={{ listStyle: 'decimal' }}>
+        {params.map((row) =>
+          <li>
+            <ContentDescriptor
+              key={row.name}
+              contentDescriptor={row}
+              uiSchema={uiSchema}
+            />
+          </li>
+        )}
+      </ol>
     );
   }
 }

@@ -27,7 +27,7 @@ it("renders empty with empty schema", () => {
 it("renders a name", () => {
   const div = document.createElement("div");
   ReactDOM.render(
-    <ContentDescriptor contentDescriptor={{ name: "foo", schema: {} }} disableTransitionProps={true} />
+    <ContentDescriptor contentDescriptor={{ name: "foo", schema: {} }} />
   , div);
   expect(div.innerHTML.includes("foo")).toBe(true);
   ReactDOM.unmountComponentAtNode(div);

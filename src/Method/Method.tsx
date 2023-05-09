@@ -40,14 +40,13 @@ const Method = ({method, uiSchema, key, methodPlugins, reactJsonOptions}: IProps
     <div
       id={method.name}
       key={key}
-      className="alert alert--info margin-bottom--sm"
+      className="margin-bottom--sm"
       >
-      <summary style={{cursor: "pointer"}}>
-        <h4 key={method.name} className="method-name" style={{display: "inline", marginRight: "3px"}}>{method.name}</h4>
-        <span key={method.summary} className="method-summary">
-          {method.summary}
-        </span>
-      </summary>
+      <h1 key={method.name} className="method-name" style={{display: "inline", marginRight: "3px"}}>{method.name}</h1>
+
+      <span key={method.summary} className="method-summary">
+        {method.summary}
+      </span>
 
       {method.tags && method.tags.length > 0 &&
        <section key="tags">
@@ -64,31 +63,23 @@ const Method = ({method, uiSchema, key, methodPlugins, reactJsonOptions}: IProps
        </section>
       }
       {method.params && method.params.length > 0 &&
-       <section key="params-title">
-         <h5>Params</h5>
-       </section>
-      }
-      {method.params &&
        <section key="params">
+         <h2 style={{ display: 'inline', marginRight: '3px' }}>Params</h2>
+         <span>({method.params.length})</span>
          <Params params={method.params as ContentDescriptorObject[]} uiSchema={uiSchema} />
        </section>
       }
       {method.result &&
        <section key="result-title">
-         <h5>Result</h5>
-       </section>
-      }
-      {method.result && (method.result as ContentDescriptorObject).schema &&
-       <section key="result">
+         <h2>Result</h2>
          <ContentDescriptor
            contentDescriptor={method.result as ContentDescriptorObject}
-           defaultExpanded={true}
-           hideIcon={true}
            hideRequired={true} uiSchema={uiSchema} />
        </section>
       }
       {method.errors && method.errors.length > 0 &&
        <section key="errors">
+         <h2>Errors</h2>
          <Errors errors={method.errors as ErrorObject[]} reactJsonOptions={reactJsonOptions} />
        </section>
       }
@@ -97,14 +88,13 @@ const Method = ({method, uiSchema, key, methodPlugins, reactJsonOptions}: IProps
         examples={method.examples as ExamplePairingObject[]}
         method={method}
         reactJsonOptions={reactJsonOptions} />
+
       {links && links.length > 0 &&
        <section key="links-title">
-         <h5>Links</h5>
-       </section>
-      }
-      {links && links.length > 0 &&
-       <section key="links">
-         <Links links={links} reactJsonOptions={reactJsonOptions} />
+         <h2>Links</h2>
+         <section key="links">
+           <Links links={links} reactJsonOptions={reactJsonOptions} />
+         </section>
        </section>
       }
       {methodPlugins && methodPlugins.length > 0 &&

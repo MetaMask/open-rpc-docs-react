@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import ReactMarkdown from "react-markdown";
+import MarkdownDescription from "../MarkdownDescription/MarkdownDescription";
 import { LinkObject } from "@open-rpc/meta-schema";
 import ExpansionTable from "../ExpansionTable/ExpansionTable";
 import Servers from "../Servers/Servers";
@@ -33,7 +33,7 @@ class Links extends Component<IProps> {
                     </div>
                   </summary>
                   <section style={{ display: "block" }} key="links-body">
-                    {link.description && <ReactMarkdown source={link.description} className="link-description" />}
+                    {link.description && <MarkdownDescription uiSchema={uiSchema} source={link.description} /> }
                     {link.params && <h6>Params</h6>}
                     {link.params && <ReactJson src={link.params} {...reactJsonOptions} />}
                     {link.server && <h6 className="link-server">Server</h6>}
