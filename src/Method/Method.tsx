@@ -118,7 +118,7 @@ const Method = ({method, uiSchema, key, methodPlugins, reactJsonOptions, onExamp
        <section key="links-title">
          <h2>Links</h2>
          <section key="links">
-           <Links links={links} reactJsonOptions={reactJsonOptions} />
+           <Links links={links} components={components} />
          </section>
        </section>
       }
