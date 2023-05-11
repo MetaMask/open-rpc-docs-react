@@ -16,17 +16,27 @@ class Params extends Component<IProps> {
       return null;
     }
     return (
-      <ol style={{ listStyle: 'decimal' }}>
-        {params.map((row) =>
-          <li>
-            <ContentDescriptor
-              key={row.name}
-              contentDescriptor={row}
-              uiSchema={uiSchema}
-            />
-          </li>
-        )}
-      </ol>
+      params.map((row, i) =>
+        <>
+          <h3>
+            {i + 1}. {row.name}
+            {
+              (
+                row.required === undefined ||
+                row.required === true
+              ) &&
+              <span className="content-descriptor-summary">
+                <i><small> (required)</small></i>
+              </span>
+            }
+          </h3>
+          <ContentDescriptor
+            key={row.name}
+            contentDescriptor={row}
+            uiSchema={uiSchema}
+          />
+        </>
+      )
     );
   }
 }

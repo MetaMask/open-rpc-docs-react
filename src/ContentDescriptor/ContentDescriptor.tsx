@@ -21,12 +21,6 @@ class ContentDescriptor extends Component<IProps> {
     if (entries.length === 0) { return null; }
     return (
       <>
-        <span>
-          <i>{contentDescriptor.name}</i>
-          {hideRequired && contentDescriptor.required === true && <span className="content-descriptor-summary">
-            <strong> (required)</strong>
-          </span>}
-        </span>
         {contentDescriptor.description &&
          <MarkdownDescription
            uiSchema={uiSchema}
@@ -34,6 +28,7 @@ class ContentDescriptor extends Component<IProps> {
            className="content-descriptor-description"
          />
         }
+        <h4>Schema:</h4>
         {contentDescriptor.schema &&
          <JsonSchemaViewer
            schema={contentDescriptor.schema}
