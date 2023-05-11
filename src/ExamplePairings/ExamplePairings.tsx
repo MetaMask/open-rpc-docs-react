@@ -5,15 +5,15 @@ import React, { Component, useEffect} from "react";
 interface IProps {
   method?: MethodObject;
   examples?: ExamplePairingObject[];
+  components?: {
+    CodeBlock: React.FC<{children: string, className?: string}>;
+  }
   onExamplePairingChange?: (examplePairing: ExamplePairingObject) => void;
   uiSchema?: any;
   reactJsonOptions?: any;
 }
 
-
-
-
-const ExamplePairings = ({method, examples, uiSchema, reactJsonOptions, onExamplePairingChange}: IProps) => {
+const ExamplePairings = ({method, examples, uiSchema, reactJsonOptions, onExamplePairingChange, components}: IProps) => {
     const [selectedIndex, setSelectedIndex] = React.useState(0);
     const paramStructure = method && method.paramStructure as MethodObjectParamStructure || "either";
 
@@ -31,20 +31,15 @@ const ExamplePairings = ({method, examples, uiSchema, reactJsonOptions, onExampl
       }
     }
 
-    // useEffect(() => {
-    //   if (onExamplePairingChange) {
-    //     onExamplePairingChange(ex[selectedIndex]);
-    //   }
-    // }, []);
-
     return (
       <div>
-        <select value={selectedIndex} onChange={handleOptionChange}>
+        {examples && examples.length > 1 && <select value={selectedIndex} onChange={handleOptionChange}>
           {optionElements}
-        </select>
+        </select>}
         {examples &&
          <ExamplePairing
            uiSchema={uiSchema}
+           components={components}
            paramStructure={paramStructure}
            examplePairing={examples[selectedIndex] as ExamplePairingObject}
            methodName={method && method.name as any}

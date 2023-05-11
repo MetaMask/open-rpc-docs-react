@@ -16,6 +16,15 @@ import ExamplePairings from "../ExamplePairings/ExamplePairings";
 import Errors from "../Errors/Errors";
 import _ from "lodash";
 
+const defaultJsonViewOptions = {
+  theme: "summerfruit:inverted",
+  collapseStringsAfterLength: 25,
+  displayDataTypes: false,
+  displayObjectSize: false,
+  indentWidth: 2,
+  name: false,
+}
+
 export interface IMethodPluginProps {
   openrpcMethodObject: MethodObject;
 }
@@ -23,13 +32,18 @@ export interface IMethodPluginProps {
 interface IProps {
   method?: MethodObject;
   methodPlugins?: Array<React.FC<IMethodPluginProps>>;
+  components?: {
+    CodeBlock: React.FC<{children: string, className?: string}>;
+  };
   onExamplePairingChange?: (examplePairing: ExamplePairingObject) => void;
   reactJsonOptions?: object;
   uiSchema?: any;
   key?: string;
 }
 
-const Method = ({method, uiSchema, key, methodPlugins, reactJsonOptions, onExamplePairingChange}: IProps) => {
+const Method = ({method, uiSchema, key, methodPlugins, reactJsonOptions, onExamplePairingChange, components}: IProps) => {
+  reactJsonOptions = {...defaultJsonViewOptions, ...reactJsonOptions};
+  console.log("reactJsonOptions", reactJsonOptions);
   if (!method) {
     return null;
   }
@@ -84,12 +98,21 @@ const Method = ({method, uiSchema, key, methodPlugins, reactJsonOptions, onExamp
          <Errors errors={method.errors as ErrorObject[]} reactJsonOptions={reactJsonOptions} />
        </section>
       }
-      <ExamplePairings
-        uiSchema={uiSchema}
-        examples={method.examples as ExamplePairingObject[]}
-        onExamplePairingChange={onExamplePairingChange}
-        method={method}
-        reactJsonOptions={reactJsonOptions} />
+
+      <br />
+
+      {method.examples && method.examples.length > 0 &&
+       <section key="examples">
+         <h2>Examples</h2>
+          <ExamplePairings
+            uiSchema={uiSchema}
+            components={components}
+            examples={method.examples as ExamplePairingObject[]}
+            onExamplePairingChange={onExamplePairingChange}
+            method={method}
+            reactJsonOptions={reactJsonOptions} />
+        </section>
+      }
 
       {links && links.length > 0 &&
        <section key="links-title">

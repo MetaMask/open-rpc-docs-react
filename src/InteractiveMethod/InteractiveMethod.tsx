@@ -137,10 +137,6 @@ const InteractiveMethod: React.FC<Props> = (props) => {
   }, [selectedExamplePairing]);
 
 
-  if (!method.params[0]) {
-    return null;
-  }
-
   const handleChange = (change: any, i: number) => {
     setRequestParams((val: any) => {
       return {
@@ -152,7 +148,7 @@ const InteractiveMethod: React.FC<Props> = (props) => {
 
   const methodCall = {
     method: method.name,
-    params: requestParams
+    params: method.paramStructure === "by-name" ? requestParams : method.params.map((p, i) => requestParams[(p as ContentDescriptorObject).name] || undefined),
   };
 
 
@@ -174,21 +170,25 @@ const InteractiveMethod: React.FC<Props> = (props) => {
 
   return (
     <>
-      <div>
-        <h3>Params</h3>
-        {method.params.map((p, i) => (
-          <>
-            <h4>{(p as ContentDescriptorObject).name}</h4>
-            <InteractiveMethodParam
-              refref={formRefs[i]}
-              formData={requestParams[(p as ContentDescriptorObject).name]}
-              onChange={(change) => handleChange(change, i)}
-              param={p as ContentDescriptorObject} />
-              <br />
-          </>
-        ))}
-      </div>
-      <hr />
+      {method.params.length > 0 &&
+      <>
+        <div>
+          <h3>Params</h3>
+          {method.params.map((p, i) => (
+            <>
+              <h4>{(p as ContentDescriptorObject).name}</h4>
+              <InteractiveMethodParam
+                refref={formRefs[i]}
+                formData={requestParams[(p as ContentDescriptorObject).name]}
+                onChange={(change) => handleChange(change, i)}
+                param={p as ContentDescriptorObject} />
+                <br />
+            </>
+          ))}
+        </div>
+        <hr />
+      </>
+      }
       <div>
         <h3>Request</h3>
         {components && components.CodeBlock && <components.CodeBlock className="language-js">{jsCode}</components.CodeBlock>}

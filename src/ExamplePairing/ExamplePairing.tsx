@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import ReactJson from "react-json-view";
 import ReactMarkdown from "react-markdown";
 import { ExampleObject, ExamplePairingObject, MethodObjectParamStructure, ExamplePairingObjectResult } from "@open-rpc/meta-schema";
 import _ from "lodash";
@@ -8,6 +7,9 @@ import MarkdownDescription from "../MarkdownDescription/MarkdownDescription";
 interface IProps {
   examplePairing?: ExamplePairingObject;
   paramStructure?: MethodObjectParamStructure;
+  components?: {
+    CodeBlock: React.FC<{children: string, className?: string}>;
+  }
   methodName?: string;
   uiSchema?: any;
   reactJsonOptions?: any;
@@ -15,7 +17,7 @@ interface IProps {
 
 class ExamplePairing extends Component<IProps, {}> {
   public render() {
-    const { examplePairing, paramStructure, methodName, uiSchema } = this.props;
+    const { examplePairing, paramStructure, methodName, uiSchema, components} = this.props;
     if (_.isUndefined(examplePairing)) {
       return null;
     }
@@ -29,6 +31,11 @@ class ExamplePairing extends Component<IProps, {}> {
       }), {} as any)
       : (examplePairing.params as ExampleObject[]).map(((p) => p.value));
 
+    const methodCall = {
+      method: methodName,
+      params,
+    }
+    const jsCode = `await window.ethereum.request(${JSON.stringify(methodCall, null, "  ")});`;
     return (
       <div>
         <div>
@@ -40,26 +47,31 @@ class ExamplePairing extends Component<IProps, {}> {
         </div>
         <div>
           <div>
-            <span>Request</span>
+            <h3>Request</h3>
             <div>
-              {examplePairing.params && <ReactJson src={{
-                id: 1,
-                jsonrpc: "2.0",
-                method: methodName,
-                params,
-              }} {...this.props.reactJsonOptions} />}
+              {components && components.CodeBlock && <components.CodeBlock className="language-js">{jsCode}</components.CodeBlock>}
+              {!components?.CodeBlock &&
+                <pre>
+                  <code>
+                    {jsCode}
+                  </code>
+                </pre>
+              }
             </div>
           </div>
         </div>
         <div>
           <div>
-            <span>Result</span>
+            <h3>Result</h3>
             <div>
-              {examplePairing.result && <ReactJson src={{
-                id: 1,
-                jsonrpc: "2.0",
-                result: (examplePairing.result as ExampleObject).value,
-              }} {...this.props.reactJsonOptions} />}
+            {components && components.CodeBlock && <components.CodeBlock className="language-js">{JSON.stringify((examplePairing.result as ExampleObject).value, null, '  ')}</components.CodeBlock>}
+            {!components?.CodeBlock &&
+              <pre>
+                  <code>
+                  {JSON.stringify((examplePairing.result as ExampleObject).value)}
+                </code>
+              </pre>
+            }
             </div>
           </div>
         </div>
