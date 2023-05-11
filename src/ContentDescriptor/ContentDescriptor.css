@@ -15,10 +15,10 @@
   padding: 0 24px 0 0px !important;
 }
 
-#interactive-box input {
+/* #interactive-box input {
   border: 1px solid black;
   border-radius: 5px;
-}
+} */
 
 .glyphicon-plus {
   --b: 4px; /* the thickness */
@@ -30,4 +30,15 @@
     calc(100% + var(--b)/2) calc(100% + var(--b)/2)/
     calc(50%  + var(--b))   calc(50%  + var(--b));
   display: inline-block;
+}
+
+select, input {
+  border-radius: var(--ifm-global-radius);
+  border: 2px solid var(--ifm-toc-border-color);
+  font: var(--ifm-font-size-base) var(--ifm-font-family-base);
+  padding: 0.8rem;
+  background: var(--docsearch-searchbox-focus-background);
+  color: var(--docsearch-text-color);
+  margin-bottom: 0.5rem;
+  transition: border var(--ifm-transition-fast) ease;
 }

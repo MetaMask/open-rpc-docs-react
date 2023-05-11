@@ -1,19 +1,28 @@
-import React from "react";
+import React, {createRef, useEffect} from "react";
 import validator from '@rjsf/validator-ajv8';
 import { IconButtonProps,ArrayFieldTemplateProps, RJSFSchema, UiSchema, ArrayFieldTemplateItemType } from '@rjsf/utils';
-import { ContentDescriptorObject, MethodObject} from '@open-rpc/meta-schema';
+import { ContentDescriptorObject, ExampleObject, ExamplePairingObject, MethodObject} from '@open-rpc/meta-schema';
 import traverse from "@json-schema-tools/traverse";
 import Form from '@rjsf/core';
 import ArrayFieldTemplate from '../ArrayFieldTemplate/ArrayFieldTemplate';
 import ArrayFieldItemTemplate from '../ArrayFieldItemTemplate/ArrayFieldItemTemplate';
+import FieldErrorTemplate from "../FieldErrorTemplate/FieldErrorTemplate";
+import def from "ajv/dist/vocabularies/discriminator";
 
 const log = (type: any) => console.log.bind(console, type);
 const uiSchema: UiSchema = {
   'ui:description': '',
+  "ui:submitButtonOptions": {
+    "norender": true,
+  }
 };
 
 interface Props {
   method: MethodObject;
+  selectedExamplePairing?: ExamplePairingObject;
+  components?: {
+    CodeBlock: React.FC<{children: string, className?: string}>;
+  };
 }
 
 
@@ -75,27 +84,31 @@ function MoveDownButton(props: IconButtonProps) {
 interface ParamProps {
   param: ContentDescriptorObject;
   onChange: (event: any) => void;
+  refref: any;
   formData: any;
 }
 const InteractiveMethodParam: React.FC<ParamProps> = (props) => {
-  const {param} = props;
+  const {param, refref} = props;
 
   const schema = traverse(
     param.schema,
-    (s) => {
+    (s ) => {
       s.description = undefined;
       s.summary = undefined;
       return s;
     },
     { mutable: false }
   );
+  schema.title = undefined;
   return (
     <Form
       schema={schema}
-    formData={props.formData}
+      formData={props.formData}
+      showErrorList={false}
       uiSchema={uiSchema}
       validator={validator}
-      templates={{ArrayFieldItemTemplate, ArrayFieldTemplate, ButtonTemplates:{ AddButton, RemoveButton, MoveUpButton, MoveDownButton } }}
+      ref={refref}
+      templates={{ArrayFieldItemTemplate, ArrayFieldTemplate, FieldErrorTemplate, ButtonTemplates:{ AddButton, RemoveButton, MoveUpButton, MoveDownButton } }}
       onChange={props.onChange}
       onError={log('errors')}
       liveValidate
@@ -104,9 +117,25 @@ const InteractiveMethodParam: React.FC<ParamProps> = (props) => {
 }
 
 const InteractiveMethod: React.FC<Props> = (props) => {
-  const {method} = props;
+  const {method, components, selectedExamplePairing} = props;
   const [requestParams, setRequestParams] = React.useState<any>({});
   const [executionResult, setExecutionResult] = React.useState<any>();
+  const formRefs = method.params.map(() => createRef());
+
+  useEffect(() => {
+    if (!selectedExamplePairing) {
+      return;
+    }
+    const defaultFormData = selectedExamplePairing?.params.reduce((memo: any, exampleObject, i) => {
+      console.log('afart', exampleObject);
+      const ex = exampleObject as ExampleObject;
+      memo[(method.params[i] as ContentDescriptorObject).name] = ex.value;
+      return memo;
+    }, {})
+    console.log(defaultFormData);
+    setRequestParams(defaultFormData);
+  }, [selectedExamplePairing]);
+
 
   if (!method.params[0]) {
     return null;
@@ -126,7 +155,13 @@ const InteractiveMethod: React.FC<Props> = (props) => {
     params: requestParams
   };
 
+
   const handleExec = async () => {
+    // loop over refs
+    formRefs.forEach((formRef) => {
+      (formRef as any).current.validateForm();
+    });
+
     try {
       const response = await (window as any).ethereum.request(methodCall);
       setExecutionResult(response);
@@ -135,30 +170,49 @@ const InteractiveMethod: React.FC<Props> = (props) => {
     }
   };
 
-  const jsCode = [
-    `await window.ethereum.request(${JSON.stringify(methodCall, null, "  ")});`
-  ]
+  const jsCode = `await window.ethereum.request(${JSON.stringify(methodCall, null, "  ")});`;
 
   return (
     <>
       <div>
+        <h3>Params</h3>
         {method.params.map((p, i) => (
-          <InteractiveMethodParam
-            formData={requestParams[(p as ContentDescriptorObject).name]}
-            onChange={(change) => handleChange(change, i)}
-            param={p as ContentDescriptorObject} />
+          <>
+            <h4>{(p as ContentDescriptorObject).name}</h4>
+            <InteractiveMethodParam
+              refref={formRefs[i]}
+              formData={requestParams[(p as ContentDescriptorObject).name]}
+              onChange={(change) => handleChange(change, i)}
+              param={p as ContentDescriptorObject} />
+              <br />
+          </>
         ))}
       </div>
-      <pre><code>
-        {jsCode}
-      </code></pre>
+      <hr />
+      <div>
+        <h3>Request</h3>
+        {components && components.CodeBlock && <components.CodeBlock className="language-js">{jsCode}</components.CodeBlock>}
+        {!components?.CodeBlock &&
+          <pre>
+            <code>
+              {jsCode}
+            </code>
+          </pre>
+        }
+      </div>
       {executionResult && <div>
-        <pre><code>
-          {JSON.stringify(executionResult, null, '  ')}
-        </code></pre>
+        <h3>Response</h3>
+        {components && components.CodeBlock && <components.CodeBlock className="language-json">{JSON.stringify(executionResult, null, '  ')}</components.CodeBlock>}
+        {!components?.CodeBlock &&
+          <pre>
+              <code>
+              {JSON.stringify(executionResult, null, '  ')}
+            </code>
+          </pre>
+        }
       </div>}
       <div>
-        <button onClick={handleExec}>Execute</button>
+        <button className="button button--primary button--block" onClick={handleExec}>Execute</button>
       </div>
     </>
   );

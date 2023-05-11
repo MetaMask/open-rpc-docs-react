@@ -23,12 +23,13 @@ export interface IMethodPluginProps {
 interface IProps {
   method?: MethodObject;
   methodPlugins?: Array<React.FC<IMethodPluginProps>>;
+  onExamplePairingChange?: (examplePairing: ExamplePairingObject) => void;
   reactJsonOptions?: object;
   uiSchema?: any;
   key?: string;
 }
 
-const Method = ({method, uiSchema, key, methodPlugins, reactJsonOptions}: IProps) => {
+const Method = ({method, uiSchema, key, methodPlugins, reactJsonOptions, onExamplePairingChange}: IProps) => {
   if (!method) {
     return null;
   }
@@ -86,6 +87,7 @@ const Method = ({method, uiSchema, key, methodPlugins, reactJsonOptions}: IProps
       <ExamplePairings
         uiSchema={uiSchema}
         examples={method.examples as ExamplePairingObject[]}
+        onExamplePairingChange={onExamplePairingChange}
         method={method}
         reactJsonOptions={reactJsonOptions} />
 

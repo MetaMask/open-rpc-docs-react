@@ -37,7 +37,7 @@ it("renders schema methods name", () => {
       },
     ],
   };
-  ReactDOM.render(<Method method={schema.methods[0] as any} uiSchema={{}}/>, div);
+  ReactDOM.render(<Method method={schema.methods[0] as any} uiSchema={{}} />, div);
   expect(div.innerHTML.includes("get_pet")).toBe(true);
   ReactDOM.unmountComponentAtNode(div);
 });
