@@ -1,20 +1,20 @@
 import React, { Component } from "react";
-import ReactMarkdown from "react-markdown";
 import { ServerObject } from "@open-rpc/meta-schema";
-import ReactJson from "react-json-view";
 import ExpansionTable from "../ExpansionTable/ExpansionTable";
 import MarkdownDescription from "../MarkdownDescription/MarkdownDescription";
 
 interface IProps {
   servers?: ServerObject[];
   uiSchema?: any;
-  reactJsonOptions?: any;
+  components?: {
+    CodeBlock: React.FC<{children: string, className?: string}>;
+  }
   noTitle?: boolean;
 }
 
 class Servers extends Component<IProps> {
   public render() {
-    const { servers, noTitle, reactJsonOptions, uiSchema } = this.props;
+    const { servers, noTitle, components, uiSchema } = this.props;
     if (!servers || servers.length === 0) {
       return null;
     }
@@ -44,7 +44,14 @@ class Servers extends Component<IProps> {
                         <br />
                       </>
                       }
-                      {server.variables && <ReactJson src={server.variables} {...reactJsonOptions} />}
+                      {server.variables && components && components.CodeBlock && <components.CodeBlock className="language-json">{JSON.stringify(server.variables, null, " ")}</components.CodeBlock>}
+                      {server.variables && !components?.CodeBlock &&
+                        <pre>
+                          <code>
+                            {JSON.stringify(server.variables, null, " ")}
+                          </code>
+                        </pre>
+                      }
                     </div>
                   </details>
                 </div>

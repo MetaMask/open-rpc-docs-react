@@ -3,17 +3,18 @@ import MarkdownDescription from "../MarkdownDescription/MarkdownDescription";
 import { LinkObject } from "@open-rpc/meta-schema";
 import ExpansionTable from "../ExpansionTable/ExpansionTable";
 import Servers from "../Servers/Servers";
-import ReactJson from "react-json-view";
 
 interface IProps {
   links?: LinkObject[];
   uiSchema?: any;
-  reactJsonOptions?: any;
+  components?: {
+    CodeBlock: React.FC<{children: string, className?: string}>;
+  };
 }
 
 class Links extends Component<IProps> {
   public render() {
-    const { links, uiSchema, reactJsonOptions } = this.props;
+    const { links, uiSchema, components } = this.props;
     if (!links || links.length === 0) { return null; }
     return (
       <ExpansionTable headers={["Method", "Summary"]}>
@@ -35,9 +36,16 @@ class Links extends Component<IProps> {
                   <section style={{ display: "block" }} key="links-body">
                     {link.description && <MarkdownDescription uiSchema={uiSchema} source={link.description} /> }
                     {link.params && <h6>Params</h6>}
-                    {link.params && <ReactJson src={link.params} {...reactJsonOptions} />}
+                    {link.params && components && components.CodeBlock && <components.CodeBlock className="language-json">{JSON.stringify(link.params, null, " ")}</components.CodeBlock>}
+                    {link.params && !components?.CodeBlock &&
+                      <pre>
+                        <code>
+                          {JSON.stringify(link.params, null, " ")}
+                        </code>
+                      </pre>
+                    }
                     {link.server && <h6 className="link-server">Server</h6>}
-                    {link.server && <Servers servers={[link.server]} noTitle={true} reactJsonOptions={reactJsonOptions} />}
+                    {link.server && <Servers servers={[link.server]} noTitle={true} components={components} />}
                   </section>
                 </details>
               </div>
