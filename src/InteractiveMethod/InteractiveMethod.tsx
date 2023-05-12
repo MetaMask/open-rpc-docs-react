@@ -7,7 +7,7 @@ import Form from '@rjsf/core';
 import ArrayFieldTemplate from '../ArrayFieldTemplate/ArrayFieldTemplate';
 import ArrayFieldItemTemplate from '../ArrayFieldItemTemplate/ArrayFieldItemTemplate';
 import FieldErrorTemplate from "../FieldErrorTemplate/FieldErrorTemplate";
-import def from "ajv/dist/vocabularies/discriminator";
+import FieldTemplate from "../FieldTemplate/FieldTemplate";
 
 const log = (type: any) => console.log.bind(console, type);
 const uiSchema: UiSchema = {
@@ -52,7 +52,6 @@ interface Props {
 
 function AddButton(props: IconButtonProps) {
   const { icon, iconType, ...btnProps } = props;
-  console.log(btnProps);
   return (
     <button {...btnProps} className={btnProps.className + " button button--outline button--primary"} type='button'>+</button>
   );
@@ -60,14 +59,12 @@ function AddButton(props: IconButtonProps) {
 
 function RemoveButton(props: IconButtonProps) {
   const { icon, iconType, ...btnProps } = props;
-  console.log(btnProps);
   return (
     <button {...btnProps} className="button button--outline button--primary" type='button'>-</button>
   );
 }
 function MoveUpButton(props: IconButtonProps) {
   const { icon, iconType, ...btnProps } = props;
-  console.log(btnProps);
   return (
     <button {...btnProps} className="button button--outline button--primary" type='button'>▲</button>
   );
@@ -75,7 +72,6 @@ function MoveUpButton(props: IconButtonProps) {
 
 function MoveDownButton(props: IconButtonProps) {
   const { icon, iconType, ...btnProps } = props;
-  console.log(btnProps);
   return (
     <button {...btnProps} className="button button--outline button--primary" type='button'>▼</button>
   );
@@ -108,7 +104,7 @@ const InteractiveMethodParam: React.FC<ParamProps> = (props) => {
       uiSchema={uiSchema}
       validator={validator}
       ref={refref}
-      templates={{ArrayFieldItemTemplate, ArrayFieldTemplate, FieldErrorTemplate, ButtonTemplates:{ AddButton, RemoveButton, MoveUpButton, MoveDownButton } }}
+      templates={{ArrayFieldItemTemplate, ArrayFieldTemplate, FieldErrorTemplate, FieldTemplate, ButtonTemplates:{ AddButton, RemoveButton, MoveUpButton, MoveDownButton } }}
       onChange={props.onChange}
       onError={log('errors')}
       liveValidate
@@ -127,12 +123,10 @@ const InteractiveMethod: React.FC<Props> = (props) => {
       return;
     }
     const defaultFormData = selectedExamplePairing?.params.reduce((memo: any, exampleObject, i) => {
-      console.log('afart', exampleObject);
       const ex = exampleObject as ExampleObject;
       memo[(method.params[i] as ContentDescriptorObject).name] = ex.value;
       return memo;
     }, {})
-    console.log(defaultFormData);
     setRequestParams(defaultFormData);
   }, [selectedExamplePairing]);
 
@@ -182,11 +176,10 @@ const InteractiveMethod: React.FC<Props> = (props) => {
                 formData={requestParams[(p as ContentDescriptorObject).name]}
                 onChange={(change) => handleChange(change, i)}
                 param={p as ContentDescriptorObject} />
-                <br />
             </>
           ))}
         </div>
-        <hr />
+        <br />
       </>
       }
       <div>
@@ -200,7 +193,7 @@ const InteractiveMethod: React.FC<Props> = (props) => {
           </pre>
         }
       </div>
-      {executionResult && <div>
+      {executionResult !== undefined && <div>
         <h3>Response</h3>
         {components && components.CodeBlock && <components.CodeBlock className="language-json">{JSON.stringify(executionResult, null, '  ')}</components.CodeBlock>}
         {!components?.CodeBlock &&

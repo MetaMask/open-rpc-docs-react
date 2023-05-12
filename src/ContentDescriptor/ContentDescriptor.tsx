@@ -28,7 +28,7 @@ class ContentDescriptor extends Component<IProps> {
            className="content-descriptor-description"
          />
         }
-        <h4>Schema:</h4>
+        <h4 style={{marginBottom: "0px"}}>Schema:</h4>
         {contentDescriptor.schema &&
          <JsonSchemaViewer
            schema={contentDescriptor.schema}

@@ -42,3 +42,7 @@ select, input {
   margin-bottom: 0.5rem;
   transition: border var(--ifm-transition-fast) ease;
 }
+
+#interactive-box input[type=text] {
+  width: 100%
+}

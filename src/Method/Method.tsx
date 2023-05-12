@@ -43,7 +43,6 @@ interface IProps {
 
 const Method = ({method, uiSchema, key, methodPlugins, reactJsonOptions, onExamplePairingChange, components}: IProps) => {
   reactJsonOptions = {...defaultJsonViewOptions, ...reactJsonOptions};
-  console.log("reactJsonOptions", reactJsonOptions);
   if (!method) {
     return null;
   }
@@ -57,11 +56,14 @@ const Method = ({method, uiSchema, key, methodPlugins, reactJsonOptions, onExamp
       key={key}
       className="margin-bottom--sm"
       >
-      <h1 key={method.name} className="method-name" style={{display: "inline", marginRight: "3px"}}>{method.name}</h1>
 
-      <span key={method.summary} className="method-summary">
-        {method.summary}
-      </span>
+      <div style={{marginBottom: "var(--ifm-heading-margin-bottom)"}}>
+        <h1 key={method.name} className="method-name" style={{display: "inline", marginRight: "3px"}}>{method.name}</h1>
+
+        <span key={method.summary} className="method-summary">
+          {method.summary}
+        </span>
+      </div>
 
       {method.tags && method.tags.length > 0 &&
        <section key="tags">
@@ -79,8 +81,10 @@ const Method = ({method, uiSchema, key, methodPlugins, reactJsonOptions, onExamp
       }
       {method.params && method.params.length > 0 &&
        <section key="params">
+        <div style={{marginBottom: "var(--ifm-heading-margin-bottom)"}}>
          <h2 style={{ display: 'inline', marginRight: '3px' }}>Params</h2>
          <span>({method.params.length})</span>
+        </div>
          <Params params={method.params as ContentDescriptorObject[]} uiSchema={uiSchema} />
        </section>
       }

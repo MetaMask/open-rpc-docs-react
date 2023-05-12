@@ -52,7 +52,6 @@ T = any,
   const {
     ButtonTemplates: { AddButton },
   } = registry.templates;
-  console.log("ArrayFieldTemplate Props", props);
   return (
     <>
       <fieldset className={className + ' row'} id={idSchema.$id}>

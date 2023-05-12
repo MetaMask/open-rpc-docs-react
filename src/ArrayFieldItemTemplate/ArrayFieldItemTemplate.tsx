@@ -34,7 +34,6 @@ export default function ArrayFieldItemTemplate<
     paddingRight: 6,
     fontWeight: 'bold',
   };
-  console.log("ArrayFieldItemTemplate Props", props);
   return (
     <div className={className + ' row'}>
       <div className={hasToolbar ? 'col col--9' : 'col col--12'}>{children}</div>
