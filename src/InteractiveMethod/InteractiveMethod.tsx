@@ -8,6 +8,8 @@ import ArrayFieldTemplate from '../ArrayFieldTemplate/ArrayFieldTemplate';
 import ArrayFieldItemTemplate from '../ArrayFieldItemTemplate/ArrayFieldItemTemplate';
 import FieldErrorTemplate from "../FieldErrorTemplate/FieldErrorTemplate";
 import FieldTemplate from "../FieldTemplate/FieldTemplate";
+const qs = require('qs');
+const { useHistory, useLocation } = require('@docusaurus/router');
 
 const log = (type: any) => console.log.bind(console, type);
 const uiSchema: UiSchema = {
@@ -84,6 +86,7 @@ interface ParamProps {
   formData: any;
 }
 const InteractiveMethodParam: React.FC<ParamProps> = (props) => {
+
   const {param, refref} = props;
 
   const schema = traverse(
@@ -113,13 +116,15 @@ const InteractiveMethodParam: React.FC<ParamProps> = (props) => {
 }
 
 const InteractiveMethod: React.FC<Props> = (props) => {
+  const history = useHistory();
+  const queryString = qs.parse(history.location.search, { ignoreQueryPrefix: true })
   const {method, components, selectedExamplePairing} = props;
-  const [requestParams, setRequestParams] = React.useState<any>({});
+  const [requestParams, setRequestParams] = React.useState<any>(queryString || {});
   const [executionResult, setExecutionResult] = React.useState<any>();
   const formRefs = method.params.map(() => createRef());
 
   useEffect(() => {
-    if (!selectedExamplePairing) {
+    if (!selectedExamplePairing || Object.keys(queryString).length > 0) {
       return;
     }
     const defaultFormData = selectedExamplePairing?.params.reduce((memo: any, exampleObject, i) => {
@@ -133,10 +138,14 @@ const InteractiveMethod: React.FC<Props> = (props) => {
 
   const handleChange = (change: any, i: number) => {
     setRequestParams((val: any) => {
-      return {
+      const newVal = {
         ...val,
         [(method.params[i] as ContentDescriptorObject).name]: change.formData,
-      };
+      }
+      history.replace({
+        search: qs.stringify(newVal),
+      });
+      return newVal;
     });
   };
 

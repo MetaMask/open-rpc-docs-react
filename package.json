@@ -29,6 +29,7 @@
     "jest-transform-css": "^2.0.0",
     "json-schema": "^0.2.3",
     "lodash": "^4.17.15",
+    "qs": "^6.11.1",
     "react-markdown": "^8.0.7",
     "react-syntax-highlighter": "^15.4.3"
   },
