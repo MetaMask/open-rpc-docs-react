@@ -117,7 +117,37 @@ const InteractiveMethodParam: React.FC<ParamProps> = (props) => {
 
 const InteractiveMethod: React.FC<Props> = (props) => {
   const history = useHistory();
-  const queryString = qs.parse(history.location.search, { ignoreQueryPrefix: true })
+  const queryString = qs.parse(history.location.search, {
+    ignoreQueryPrefix: true,
+    decoder: (
+      value: string,
+      defaultEncoder: any,
+      _: string,
+      type: "key" | "value",
+    ) => {
+      if (type === "key") {
+        return defaultEncoder(value);
+      }
+      if (/^(\d+|\d*\.\d+)$/.test(value)) {
+        return parseFloat(value);
+      }
+      const keywords: any = {
+        true: true,
+        false: false,
+        null: null,
+        undefined,
+      };
+      if (value in keywords) {
+        return keywords[value];
+      }
+
+      try {
+        return decodeURIComponent(value);
+      } catch (e) {
+        return value;
+      }
+    },
+  })
   const {method, components, selectedExamplePairing} = props;
   const [requestParams, setRequestParams] = React.useState<any>(queryString || {});
   const [executionResult, setExecutionResult] = React.useState<any>();
@@ -143,7 +173,7 @@ const InteractiveMethod: React.FC<Props> = (props) => {
         [(method.params[i] as ContentDescriptorObject).name]: change.formData,
       }
       history.replace({
-        search: qs.stringify(newVal),
+        search: qs.stringify(newVal, { encode: false }),
       });
       return newVal;
     });
