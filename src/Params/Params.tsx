@@ -17,7 +17,7 @@ class Params extends Component<IProps> {
     }
     return (
       params.map((row, i) =>
-        <>
+        <section>
           <h3>
             {i + 1}. {row.name}
             {
@@ -35,7 +35,7 @@ class Params extends Component<IProps> {
             contentDescriptor={row}
             uiSchema={uiSchema}
           />
-        </>
+        </section>
       )
     );
   }

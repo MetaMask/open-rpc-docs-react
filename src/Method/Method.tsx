@@ -54,23 +54,17 @@ const Method = ({method, uiSchema, key, methodPlugins, reactJsonOptions, onExamp
     <div
       id={method.name}
       key={key}
-      className="margin-bottom--sm"
-      >
+      className="method margin-bottom--sm"
+    >
 
-      <div style={{marginBottom: "var(--ifm-heading-margin-bottom)"}}>
-        <h1 key={method.name} className="method-name" style={{display: "inline", marginRight: "3px"}}>{method.name}</h1>
+      <h1 key={method.name} className="method-name" style={{ display: "inline", marginRight: "3px"}}>{method.name}</h1>
 
-        <span key={method.summary} className="method-summary">
-          {method.summary}
-        </span>
-      </div>
-
-      {method.tags && method.tags.length > 0 &&
-       <section key="tags">
-         <Tags tags={method.tags as any} />
-       </section>
+      {method.tags && method.tags.length > 0 && <section key="tags">
+        <Tags tags={method.tags as any} />
+      </section>
       }
-      {method.description &&
+
+      {method.description ?
        <section key="description">
          <MarkdownDescription
            uiSchema={uiSchema}
@@ -78,19 +72,30 @@ const Method = ({method, uiSchema, key, methodPlugins, reactJsonOptions, onExamp
            className="method-description"
          />
        </section>
+      : method.summary ?
+       <p key={method.summary} className="method-summary">
+         {method.summary}
+       </p>
+      : null
       }
-      {method.params && method.params.length > 0 &&
-       <section key="params">
+      <section key="params">
         <div style={{marginBottom: "var(--ifm-heading-margin-bottom)"}}>
-         <h2 style={{ display: 'inline', marginRight: '3px' }}>Params</h2>
-         <span>({method.params.length})</span>
+          <h2 style={{ display: 'inline', marginRight: '3px' }}>Params</h2>
+          <span>({method.params.length})</span>
         </div>
+
+        {method.params && method.params.length > 0 &&
          <Params params={method.params as ContentDescriptorObject[]} uiSchema={uiSchema} />
-       </section>
-      }
+        }
+      </section>
+
       {method.result &&
        <section key="result-title">
-         <h2>Result</h2>
+         <div style={{marginBottom: "var(--ifm-heading-margin-bottom)"}}>
+           <h2 style={{ display: 'inline', marginRight: '3px' }}>Result</h2>
+           <span><i>({(method.result as ContentDescriptorObject).name})</i></span>
+         </div>
+
          <ContentDescriptor
            contentDescriptor={method.result as ContentDescriptorObject}
            hideRequired={true} uiSchema={uiSchema} />
@@ -103,19 +108,21 @@ const Method = ({method, uiSchema, key, methodPlugins, reactJsonOptions, onExamp
        </section>
       }
 
-      <br />
-
       {method.examples && method.examples.length > 0 &&
        <section key="examples">
-         <h2>Examples</h2>
-          <ExamplePairings
-            uiSchema={uiSchema}
-            components={components}
-            examples={method.examples as ExamplePairingObject[]}
-            onExamplePairingChange={onExamplePairingChange}
-            method={method}
-            reactJsonOptions={reactJsonOptions} />
-        </section>
+         <div style={{marginBottom: "var(--ifm-heading-margin-bottom)"}}>
+           <h2 style={{ marginRight: '3px' }}>
+             { (method.examples as ExamplePairingObject[]).length > 1 ? "Examples" : "Example" }
+           </h2>
+         </div>
+         <ExamplePairings
+           uiSchema={uiSchema}
+           components={components}
+           examples={method.examples as ExamplePairingObject[]}
+           onExamplePairingChange={onExamplePairingChange}
+           method={method}
+           reactJsonOptions={reactJsonOptions} />
+       </section>
       }
 
       {links && links.length > 0 &&

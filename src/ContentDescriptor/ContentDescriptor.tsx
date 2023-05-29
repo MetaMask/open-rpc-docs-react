@@ -4,8 +4,7 @@ import ReactMarkdown from "react-markdown";
 import { ContentDescriptorObject } from "@open-rpc/meta-schema";
 import "./ContentDescriptor.css";
 import MarkdownDescription from "../MarkdownDescription/MarkdownDescription";
-import { JsonSchemaViewer } from "@stoplight/json-schema-viewer";
-
+import { JsonSchemaViewer } from "mm-json-schema-viewer/dist/index";
 
 interface IProps {
   contentDescriptor?: ContentDescriptorObject;
@@ -20,7 +19,7 @@ class ContentDescriptor extends Component<IProps> {
     const entries = Object.entries(contentDescriptor);
     if (entries.length === 0) { return null; }
     return (
-      <>
+      <div style={{ paddingLeft: 'var(--ifm-list-left-padding)' }}>
         {contentDescriptor.description &&
          <MarkdownDescription
            uiSchema={uiSchema}
@@ -28,13 +27,12 @@ class ContentDescriptor extends Component<IProps> {
            className="content-descriptor-description"
          />
         }
-        <h4 style={{marginBottom: "0px"}}>Schema:</h4>
         {contentDescriptor.schema &&
          <JsonSchemaViewer
            schema={contentDescriptor.schema}
          />
         }
-      </>
+      </div>
     );
 
     /* return (
