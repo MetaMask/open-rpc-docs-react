@@ -244,7 +244,9 @@ const InteractiveMethod: React.FC<Props> = (props) => {
         }
       </div>}
       <div>
-        <button className="button button--primary button--block" onClick={handleExec}>Execute</button>
+        <button className="button button--primary button--block" onClick={handleExec}>
+          Send Request
+        </button>
       </div>
     </>
   );
