@@ -46,3 +46,7 @@ select, input {
 #interactive-box input[type=text] {
   width: 100%
 }
+
+.method section {
+  margin-bottom: var(--ifm-heading-margin-bottom);
+}
