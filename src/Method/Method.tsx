@@ -35,7 +35,7 @@ interface IProps {
   components?: {
     CodeBlock: React.FC<{children: string, className?: string}>;
   };
-  onExamplePairingChange?: (examplePairing: ExamplePairingObject) => void;
+  onExamplePairingChange?: (examplePairing: ExamplePairingObject | undefined) => void;
   reactJsonOptions?: object;
   uiSchema?: any;
   key?: string;

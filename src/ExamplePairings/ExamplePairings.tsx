@@ -8,7 +8,7 @@ interface IProps {
   components?: {
     CodeBlock: React.FC<{children: string, className?: string}>;
   }
-  onExamplePairingChange?: (examplePairing: ExamplePairingObject) => void;
+  onExamplePairingChange?: (examplePairing: ExamplePairingObject | undefined) => void;
   uiSchema?: any;
   reactJsonOptions?: any;
 }
