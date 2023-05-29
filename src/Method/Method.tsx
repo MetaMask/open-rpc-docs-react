@@ -81,7 +81,7 @@ const Method = ({method, uiSchema, key, methodPlugins, reactJsonOptions, onExamp
       <section key="params">
         <div style={{marginBottom: "var(--ifm-heading-margin-bottom)"}}>
           <h2 style={{ display: 'inline', marginRight: '3px' }}>Params</h2>
-          <span>({method.params.length})</span>
+          <span>({method.params?.length || 0})</span>
         </div>
 
         {method.params && method.params.length > 0 &&

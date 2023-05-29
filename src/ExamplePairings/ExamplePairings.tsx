@@ -31,6 +31,10 @@ const ExamplePairings = ({method, examples, uiSchema, reactJsonOptions, onExampl
       }
     }
 
+    if (!examples || examples.length === 0) {
+      return null;
+    }
+
     return (
       <div>
         {examples && examples.length > 1 && <select value={selectedIndex} onChange={handleOptionChange}>

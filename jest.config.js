@@ -34,7 +34,7 @@ module.exports = {
 
   // Indicates which provider should be used to instrument code for coverage
   coverageProvider: 'babel',
-
+  rootDir: './src',
   // A list of reporter names that Jest uses when writing coverage reports
   coverageReporters: ['html', 'json-summary', 'text'],
 
@@ -95,9 +95,19 @@ module.exports = {
 
   // An enum that specifies notification mode. Requires { notify: true }
   // notifyMode: "failure-change",
+  testEnvironment: 'jsdom',
 
   // A preset that is used as a base for Jest's configuration
   preset: 'ts-jest',
+  transform: {
+    '^.+\\.[tj]s$': 'ts-jest',
+  },
+
+  transformIgnorePatterns: ['<rootDir>/node_modules/(?!react-markdown)'],
+
+  moduleNameMapper: {
+    '\\.(css|less|sass|scss)$': 'jest-transform-css',
+  },
 
   // Run tests from one or more projects
   // projects: undefined,

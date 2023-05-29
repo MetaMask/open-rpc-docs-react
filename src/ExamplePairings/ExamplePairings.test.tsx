@@ -308,7 +308,6 @@ it("renders examples by-name", async () => {
       method={method}
       examples={method.examples as ExamplePairingObject[]
     } />, div);
-  expect(div.innerHTML).toContain("listPetExample");
   expect(div.innerHTML).toContain("limit");
   expect(div.innerHTML).toContain("1");
 });

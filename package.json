@@ -1,14 +1,26 @@
 {
   "name": "docusaurus-open-rpc-docs-react",
   "version": "0.0.1",
-  "description": "",
-  "main": "build/index.js",
+  "description": "Docusaurus OpenRPC Docs React Plugin",
+  "homepage": "https://github.com/MetaMask/openrpc-docs-react#readme",
+  "bugs": {
+    "url": "https://github.com/MetaMask/openrpc-docs-react/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MetaMask/openrpc-docs-react.git"
+  },
+  "license": "Apache-2.0",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/"
+  ],
   "scripts": {
-    "lint": "yarn lint:eslint && yarn lint:constraints && yarn lint:misc --check && yarn lint:dependencies --check && yarn lint:changelog",
-    "build": "tsc && cp src/ContentDescriptor/ContentDescriptor.css build/ContentDescriptor/",
-    "test": "jest && jest-it-up",
+    "build": "tsc --project tsconfig.build.json && cp src/ContentDescriptor/ContentDescriptor.css dist/ContentDescriptor/",
     "build:clean": "rimraf dist && yarn build",
     "build:docs": "typedoc",
+    "lint": "yarn lint:eslint && yarn lint:constraints && yarn lint:misc --check && yarn lint:dependencies --check && yarn lint:changelog",
     "lint:changelog": "auto-changelog validate",
     "lint:constraints": "yarn constraints",
     "lint:dependencies": "depcheck && yarn dedupe",
@@ -16,13 +28,8 @@
     "lint:fix": "yarn lint:eslint --fix && yarn lint:constraints --fix && yarn lint:misc --write && yarn lint:dependencies && yarn lint:changelog",
     "lint:misc": "prettier '**/*.json' '**/*.md' '!CHANGELOG.md' '**/*.yml' '!.yarnrc.yml' --ignore-path .gitignore --no-error-on-unmatched-pattern",
     "prepack": "./scripts/prepack.sh",
+    "test": "jest && jest-it-up",
     "test:watch": "jest --watch"
-  },
-  "author": "",
-  "license": "Apache-2.0",
-  "peerDependencies": {
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
   },
   "dependencies": {
     "@json-schema-tools/traverse": "^1.10.1",
@@ -35,7 +42,7 @@
     "@stoplight/mosaic-code-viewer": "^1.32",
     "hash-color-material": "^1.1.3",
     "jest-environment-jsdom": "^29.5.0",
-    "jest-transform-css": "^2.0.0",
+    "jest-transform-css": "^6.0.1",
     "json-schema": "^0.2.3",
     "lodash": "^4.17.15",
     "mm-json-schema-viewer": "^0.0.1",
@@ -75,17 +82,26 @@
     "json-schema-ref-parser": "^7.0.1",
     "prettier": "^2.7.1",
     "prettier-plugin-packagejson": "^2.3.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "rimraf": "^3.0.2",
     "ts-jest": "^29.1.0",
     "ts-node": "^10.7.0",
-    "tslint": "^5.14.0",
     "typedoc": "^0.23.15",
     "typescript": "^5.0.4"
   },
-  "files": [
-    "build"
-  ],
+  "peerDependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
   "packageManager": "yarn@3.2.1",
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "lavamoat": {
     "allowScripts": {
       "@lavamoat/preinstall-always-fail": false,
