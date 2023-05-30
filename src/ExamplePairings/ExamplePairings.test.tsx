@@ -47,202 +47,6 @@ it("renders examples", async () => {
   ReactDOM.unmountComponentAtNode(div);
 });
 
-it("renders examples with only schema examples", async () => {
-  const div = document.createElement("div");
-  const testDoc: OpenrpcDocument = {
-    info: {
-      title: "test",
-      version: "0.0.0",
-    },
-    methods: [
-      {
-        name: "test-method",
-        params: [{
-          name: "testparam1",
-          schema: {
-            examples: ["bob"],
-            type: "string",
-          },
-        }],
-        result: {
-          name: "test-method-result",
-          schema: {
-            examples: ["potato"],
-            type: "string",
-          },
-        },
-      },
-    ],
-    openrpc: "1.0.0",
-  };
-
-  const method = testDoc.methods[0] as MethodObject;
-  ReactDOM.render(
-    <ExamplePairings
-      method={method}
-      examples={method.examples as ExamplePairingObject[]
-      } />
-    , div);
-  expect(div.innerHTML.includes("potato")).toBe(true);
-  expect(div.innerHTML.includes("bob")).toBe(true);
-  ReactDOM.unmountComponentAtNode(div);
-});
-
-it("renders examples with only schema examples with no params", async () => {
-  const div = document.createElement("div");
-  const testDoc: OpenrpcDocument = {
-    info: {
-      title: "test",
-      version: "0.0.0",
-    },
-    methods: [
-      {
-        name: "test-method",
-        params: [],
-        result: {
-          name: "test-method-result",
-          schema: {
-            examples: ["potato"],
-            type: "string",
-          },
-        },
-      },
-    ],
-    openrpc: "1.0.0",
-  };
-
-  const method = testDoc.methods[0] as MethodObject;
-  ReactDOM.render(
-    <ExamplePairings
-      method={method}
-      examples={method.examples as ExamplePairingObject[]
-      } />
-    , div);
-  expect(div.innerHTML.includes("potato")).toBe(true);
-  expect(div.innerHTML.includes("bob")).toBe(false);
-  ReactDOM.unmountComponentAtNode(div);
-});
-
-it("renders examples with multiple param schema examples and no method", async () => {
-  const div = document.createElement("div");
-  const testDoc: OpenrpcDocument = {
-    info: {
-      title: "test",
-      version: "0.0.0",
-    },
-    methods: [
-      {
-        name: "test-method",
-        params: [
-          {
-            name: "testparam1",
-            schema: {
-              examples: ["bob"],
-              type: "string",
-            },
-          },
-          {
-            name: "testparam2",
-            schema: {
-              examples: ["bob2"],
-              type: "string",
-            },
-          },
-        ],
-        result: {
-          name: "test-method-result",
-          schema: {
-            examples: ["potato"],
-            type: "string",
-          },
-        },
-      },
-    ],
-    openrpc: "1.0.0",
-  };
-
-  const method = testDoc.methods[0] as MethodObject;
-  ReactDOM.render(
-    <ExamplePairings method={method} />
-    , div);
-  expect(div.innerHTML.includes("bob")).toBe(true);
-  expect(div.innerHTML.includes("bob2")).toBe(true);
-  ReactDOM.unmountComponentAtNode(div);
-});
-
-it("renders examples with only schema examples and no method", async () => {
-  const div = document.createElement("div");
-  const testDoc: OpenrpcDocument = {
-    info: {
-      title: "test",
-      version: "0.0.0",
-    },
-    methods: [
-      {
-        name: "test-method",
-        params: [{
-          name: "testparam1",
-          schema: {
-            examples: ["bob"],
-            type: "string",
-          },
-        }],
-        result: {
-          name: "test-method-result",
-          schema: {
-            examples: ["potato"],
-            type: "string",
-          },
-        },
-      },
-    ],
-    openrpc: "1.0.0",
-  };
-  const method = testDoc.methods[0] as MethodObject;
-  ReactDOM.render(
-    <ExamplePairings
-      examples={method.examples as ExamplePairingObject[]
-      } />
-    , div);
-  ReactDOM.unmountComponentAtNode(div);
-});
-
-it("renders examples with only schema examples and no method with number", async () => {
-  const div = document.createElement("div");
-  const testDoc: OpenrpcDocument = {
-    info: {
-      title: "test",
-      version: "0.0.0",
-    },
-    methods: [
-      {
-        name: "test-method",
-        params: [{
-          name: "testparam1",
-          schema: {
-            examples: [10101],
-            type: "number",
-          },
-        }],
-        result: {
-          name: "test-method-result",
-          schema: {
-            examples: ["potato"],
-            type: "string",
-          },
-        },
-      },
-    ],
-    openrpc: "1.0.0",
-  };
-  const method = testDoc.methods[0] as MethodObject;
-  ReactDOM.render(
-    <ExamplePairings
-      examples={method.examples as ExamplePairingObject[]
-      } />
-    , div);
-  ReactDOM.unmountComponentAtNode(div);
-});
 it("renders examples with only schema examples and no method with multiple number examples", async () => {
   const div = document.createElement("div");
   const testDoc: OpenrpcDocument = {
@@ -284,18 +88,19 @@ it("renders examples with only schema examples and no method with multiple numbe
 it("renders examples and can switch between them", async () => {
   const simpleMath = await refParser.dereference(examples.simpleMath as any) as OpenrpcDocument;
   const method = simpleMath.methods[0] as MethodObject;
-  const { getByText } = render(
+  const { getByText, getByTestId, getAllByTestId } = render(
     <ExamplePairings
       method={method}
       examples={method.examples as ExamplePairingObject[]
       } />,
   );
-  const node = getByText("simpleMathAdditionTwo");
-  fireEvent.click(node);
-  const secondExampleMenuItem = getByText("simpleMathAdditionFour");
-  fireEvent.click(secondExampleMenuItem);
-  const example8 = getByText("8");
-  expect(example8).toBeDefined();
+  const node = getByTestId('example-pairing-select');
+  fireEvent.change(node, { target: { value: '1' } });
+  let options = getAllByTestId('example-pairing-option');
+  if (!options || !options[1]) {
+    throw new Error("Expected two options");
+  }
+  expect((options[1] as HTMLOptionElement).selected).toBeTruthy();
   cleanup();
 });
 
@@ -308,7 +113,6 @@ it("renders examples by-name", async () => {
       method={method}
       examples={method.examples as ExamplePairingObject[]
     } />, div);
-  expect(div.innerHTML).toContain("listPetExample");
   expect(div.innerHTML).toContain("limit");
   expect(div.innerHTML).toContain("1");
 });

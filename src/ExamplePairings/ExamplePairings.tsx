@@ -8,7 +8,7 @@ interface IProps {
   components?: {
     CodeBlock: React.FC<{children: string, className?: string}>;
   }
-  onExamplePairingChange?: (examplePairing: ExamplePairingObject) => void;
+  onExamplePairingChange?: (examplePairing: ExamplePairingObject | undefined) => void;
   uiSchema?: any;
   reactJsonOptions?: any;
 }
@@ -18,7 +18,7 @@ const ExamplePairings = ({method, examples, uiSchema, reactJsonOptions, onExampl
     const paramStructure = method && method.paramStructure as MethodObjectParamStructure || "either";
 
     const optionElements = examples?.map((example, i) => (
-      <option key={example.name} value={i}>
+      <option data-testid="example-pairing-option" key={example.name} value={i}>
         {example.name}
       </option>
     ));
@@ -31,9 +31,13 @@ const ExamplePairings = ({method, examples, uiSchema, reactJsonOptions, onExampl
       }
     }
 
+    if (!examples || examples.length === 0) {
+      return null;
+    }
+
     return (
       <div>
-        {examples && examples.length > 1 && <select value={selectedIndex} onChange={handleOptionChange}>
+        {examples && examples.length > 1 && <select data-testid="example-pairing-select" value={selectedIndex} onChange={handleOptionChange}>
           {optionElements}
         </select>}
         {examples &&

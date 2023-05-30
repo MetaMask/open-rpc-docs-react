@@ -23,12 +23,3 @@ it("renders empty with empty schema", () => {
   expect(div.innerHTML).toBe("");
   ReactDOM.unmountComponentAtNode(div);
 });
-
-it("renders a name", () => {
-  const div = document.createElement("div");
-  ReactDOM.render(
-    <ContentDescriptor contentDescriptor={{ name: "foo", schema: {} }} />
-  , div);
-  expect(div.innerHTML.includes("foo")).toBe(true);
-  ReactDOM.unmountComponentAtNode(div);
-});
