@@ -7,6 +7,8 @@
     "@types/*",
     "prettier-plugin-packagejson",
     "ts-node",
-    "typedoc"
+    "typedoc",
+    "jest-environment-jsdom",
+    "jest-transform-css"
   ]
 }
