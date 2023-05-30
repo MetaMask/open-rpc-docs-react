@@ -1054,6 +1054,7 @@ __metadata:
     "@rjsf/core": ^5.6.2
     "@rjsf/utils": ^5.6.2
     "@rjsf/validator-ajv8": ^5.6.2
+    "@stoplight/json-schema-viewer": ^4.9.1
     "@stoplight/markdown-viewer": ^5
     "@stoplight/mosaic": ^1.32
     "@stoplight/mosaic-code-viewer": ^1.32
@@ -1082,7 +1083,6 @@ __metadata:
     jest-transform-css: ^6.0.1
     json-schema-ref-parser: ^7.0.1
     lodash: ^4.17.15
-    mm-json-schema-viewer: ^0.0.1
     prettier: ^2.7.1
     prettier-plugin-packagejson: ^2.3.0
     qs: ^6.11.1
@@ -1546,6 +1546,28 @@ __metadata:
     "@types/json-schema": ^7.0.7
     magic-error: 0.0.1
   checksum: 781c4d27005ab3e99354de90ece401077689a854682508574f000eec309de3f55a1764d539e712f49ff2b59989662dfbe1b7e790e4b096c4af6344f28ec0b616
+  languageName: node
+  linkType: hard
+
+"@stoplight/json-schema-viewer@npm:^4.9.1":
+  version: 4.9.1
+  resolution: "@stoplight/json-schema-viewer@npm:4.9.1"
+  dependencies:
+    "@stoplight/json": ^3.20.1
+    "@stoplight/json-schema-tree": ^2.2.2
+    "@stoplight/react-error-boundary": ^2.0.0
+    "@types/json-schema": ^7.0.7
+    classnames: ^2.2.6
+    fnv-plus: ^1.3.1
+    jotai: ^1.4.5
+    lodash: ^4.17.19
+  peerDependencies:
+    "@stoplight/markdown-viewer": ^5
+    "@stoplight/mosaic": ^1.32
+    "@stoplight/mosaic-code-viewer": ^1.32
+    react: ">=16.8"
+    react-dom: ">=16.8"
+  checksum: a6dbf9365098ea9973fdefb5ab8488c022c18dfcaa9fe8a20c364c1169b0279d64134de29e69f5469872e1747e22383a2980809b655f3486b9c8e901c4159046
   languageName: node
   linkType: hard
 
@@ -7133,28 +7155,6 @@ __metadata:
   bin:
     mkdirp: bin/cmd.js
   checksum: a96865108c6c3b1b8e1d5e9f11843de1e077e57737602de1b82030815f311be11f96f09cce59bd5b903d0b29834733e5313f9301e3ed6d6f6fba2eae0df4298f
-  languageName: node
-  linkType: hard
-
-"mm-json-schema-viewer@npm:^0.0.1":
-  version: 0.0.1
-  resolution: "mm-json-schema-viewer@npm:0.0.1"
-  dependencies:
-    "@stoplight/json": ^3.20.1
-    "@stoplight/json-schema-tree": ^2.2.2
-    "@stoplight/react-error-boundary": ^2.0.0
-    "@types/json-schema": ^7.0.7
-    classnames: ^2.2.6
-    fnv-plus: ^1.3.1
-    jotai: ^1.4.5
-    lodash: ^4.17.19
-  peerDependencies:
-    "@stoplight/markdown-viewer": ^5
-    "@stoplight/mosaic": ^1.32
-    "@stoplight/mosaic-code-viewer": ^1.32
-    react: ">=16.8"
-    react-dom: ">=16.8"
-  checksum: 7bde2ac99989b6b9bc9daf68b97f57239a4c42791cb823802bdd8d8b3cb20fbd45acaa4a0763ad8b0052a556f7dcc089ebcbbb8c40aa935e06884ddb20319fdf
   languageName: node
   linkType: hard
 
