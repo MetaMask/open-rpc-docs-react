@@ -41,7 +41,6 @@
     "@stoplight/mosaic": "^1.32",
     "@stoplight/mosaic-code-viewer": "^1.32",
     "hash-color-material": "^1.1.3",
-    "json-schema": "^0.2.3",
     "lodash": "^4.17.15",
     "mm-json-schema-viewer": "^0.0.1",
     "qs": "^6.11.1",

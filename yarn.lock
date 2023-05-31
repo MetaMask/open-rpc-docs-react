@@ -1080,7 +1080,6 @@ __metadata:
     jest-environment-jsdom: ^29.5.0
     jest-it-up: ^2.0.2
     jest-transform-css: ^6.0.1
-    json-schema: ^0.2.3
     json-schema-ref-parser: ^7.0.1
     lodash: ^4.17.15
     mm-json-schema-viewer: ^0.0.1
@@ -6123,13 +6122,6 @@ __metadata:
   version: 1.0.0
   resolution: "json-schema-traverse@npm:1.0.0"
   checksum: 02f2f466cdb0362558b2f1fd5e15cce82ef55d60cd7f8fa828cf35ba74330f8d767fcae5c5c2adb7851fa811766c694b9405810879bc4e1ddd78a7c0e03658ad
-  languageName: node
-  linkType: hard
-
-"json-schema@npm:^0.2.3":
-  version: 0.2.5
-  resolution: "json-schema@npm:0.2.5"
-  checksum: 54871525a19997c824d98916fbbef3cb190638c62e5945412785f3c6d90faae7bfff5a1935355a51b979497a7e059a2013eab4a6de144097b9fa80a5be920fb3
   languageName: node
   linkType: hard
 
