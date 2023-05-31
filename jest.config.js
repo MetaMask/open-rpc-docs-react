@@ -34,7 +34,7 @@ module.exports = {
 
   // Indicates which provider should be used to instrument code for coverage
   coverageProvider: 'babel',
-  rootDir: './src',
+  // rootDir: './src',
   // A list of reporter names that Jest uses when writing coverage reports
   coverageReporters: ['html', 'json-summary', 'text'],
 
@@ -102,11 +102,12 @@ module.exports = {
   transform: {
     '^.+\\.[tj]s$': 'ts-jest',
   },
-
-  transformIgnorePatterns: ['<rootDir>/node_modules/(?!react-markdown)'],
+  transformIgnorePatterns: ['node_modules/(?!mm-json-schema-viewer)/'],
 
   moduleNameMapper: {
     '\\.(css|less|sass|scss)$': 'jest-transform-css',
+    'react-markdown':
+      '<rootDir>/node_modules/react-markdown/react-markdown.min.js',
   },
 
   // Run tests from one or more projects
@@ -134,9 +135,7 @@ module.exports = {
   // rootDir: undefined,
 
   // A list of paths to directories that Jest should use to search for files in
-  // roots: [
-  //   "<rootDir>"
-  // ],
+  // roots: [],
 
   // Allows you to use a custom runner instead of Jest's default test runner
   // runner: "jest-runner",
