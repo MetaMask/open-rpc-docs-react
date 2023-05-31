@@ -383,11 +383,11 @@ __metadata:
   linkType: hard
 
 "@babel/runtime@npm:^7.1.2, @babel/runtime@npm:^7.10.2, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.17.8, @babel/runtime@npm:^7.3.1":
-  version: 7.21.5
-  resolution: "@babel/runtime@npm:7.21.5"
+  version: 7.22.3
+  resolution: "@babel/runtime@npm:7.22.3"
   dependencies:
     regenerator-runtime: ^0.13.11
-  checksum: 358f2779d3187f5c67ad302e8f8d435412925d0b991d133c7d4a7b1ddd5a3fda1b6f34537cb64628dfd96a27ae46df105bed3895b8d754b88cacdded8d1129dd
+  checksum: 8fc50785ca4cba749fed90bffca7e6fd52d4709755654e95b8d2a945fc034b56fb8c2e8a0183fea7c4abb86bf5fa77678c0ea35163b6920649833d180c34c234
   languageName: node
   linkType: hard
 
@@ -1304,13 +1304,13 @@ __metadata:
   linkType: hard
 
 "@react-types/checkbox@npm:^3.2.3":
-  version: 3.4.3
-  resolution: "@react-types/checkbox@npm:3.4.3"
+  version: 3.4.4
+  resolution: "@react-types/checkbox@npm:3.4.4"
   dependencies:
-    "@react-types/shared": ^3.18.0
+    "@react-types/shared": ^3.18.1
   peerDependencies:
     react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0
-  checksum: 7b39cc56392d96ba8804228ac72859bf6ea6d35e8a32562bcca88bb705e012e9ce5af14a8027a4d3c6f440d2fdfa4014eabc33d551547b23a9a9a399c5af5331
+  checksum: 147bd4288ee714ead98433388589673632d92e26a7152032809dbcab9424b219505aabed9ad49770197c5d8cc0e660cad7cb077426eb08f333b333aecacd40fc
   languageName: node
   linkType: hard
 
@@ -1334,12 +1334,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-types/shared@npm:^3.18.0, @react-types/shared@npm:^3.8.0, @react-types/shared@npm:^3.9.0":
-  version: 3.18.0
-  resolution: "@react-types/shared@npm:3.18.0"
+"@react-types/shared@npm:^3.18.1, @react-types/shared@npm:^3.8.0, @react-types/shared@npm:^3.9.0":
+  version: 3.18.1
+  resolution: "@react-types/shared@npm:3.18.1"
   peerDependencies:
     react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0
-  checksum: 8fc56701e91f4f943f5b7c7cf968f103527c8dd5803430bd46e9210c24d3b410132fb3ded63841cf3c5cb20558385746b2705ba61204ff425c30fb1f0a64e342
+  checksum: 298822d1cca26b5da1bdf53a57d26d5619f3af816db3fdecdc8b99a3a305ca8ee352347ca43f426a5d79045b08cf32c00c6b083ad4a1002abf673de9dd4a9bb5
   languageName: node
   linkType: hard
 
@@ -1748,12 +1748,12 @@ __metadata:
   linkType: hard
 
 "@stoplight/types@npm:^13.0.0, @stoplight/types@npm:^13.6.0, @stoplight/types@npm:^13.7.0":
-  version: 13.14.0
-  resolution: "@stoplight/types@npm:13.14.0"
+  version: 13.15.0
+  resolution: "@stoplight/types@npm:13.15.0"
   dependencies:
     "@types/json-schema": ^7.0.4
     utility-types: ^3.10.0
-  checksum: f2742562299d9088b3ae618fc8bd83f67653e51bfc49bb9ca9a3d91035dd0fe02baa741786742bfd6f70037fc32986700d98ade4b3a0ad6b55e79b39c34fca76
+  checksum: 839f0bbedb791bd6792ef22b6a821ca504b14b705927f7c510c4cdcc591eddc8818c82b8857129501aa809d6f369b82e4487bfe18dfc5ce00e28317ecad2df9a
   languageName: node
   linkType: hard
 
@@ -2091,13 +2091,13 @@ __metadata:
   linkType: hard
 
 "@types/react@npm:^17, @types/react@npm:^17.0.3":
-  version: 17.0.59
-  resolution: "@types/react@npm:17.0.59"
+  version: 17.0.60
+  resolution: "@types/react@npm:17.0.60"
   dependencies:
     "@types/prop-types": "*"
     "@types/scheduler": "*"
     csstype: ^3.0.2
-  checksum: 09dd0052079ec0c06360790985dc23ce116ac861b77e98aa634cb53dcdac400d878a15c6649dfe5797ac60afc2ab65d40c72c21a302deefd22b2d7804f93c37c
+  checksum: 8565e53d6ad83cd5f606fa66f5f9d8d0e5323a0103114a0292ae8f97c17ce4a7dfa15b847c54eb0a2c41c03df7fd64ba1d5bcef91ee0c177e55315e52e334463
   languageName: node
   linkType: hard
 
@@ -7994,9 +7994,9 @@ __metadata:
   linkType: hard
 
 "react-fast-compare@npm:^3.2.0":
-  version: 3.2.1
-  resolution: "react-fast-compare@npm:3.2.1"
-  checksum: 209b4dc3a9cc79c074a26ec020459efd8be279accaca612db2edb8ada2a28849ea51cf3d246fc0fafb344949b93a63a43798b6c1787559b0a128571883fe6859
+  version: 3.2.2
+  resolution: "react-fast-compare@npm:3.2.2"
+  checksum: 2071415b4f76a3e6b55c84611c4d24dcb12ffc85811a2840b5a3f1ff2d1a99be1020d9437ee7c6e024c9f4cbb84ceb35e48cf84f28fcb00265ad2dfdd3947704
   languageName: node
   linkType: hard
 

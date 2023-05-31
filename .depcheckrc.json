@@ -9,6 +9,9 @@
     "ts-node",
     "typedoc",
     "jest-environment-jsdom",
-    "jest-transform-css"
+    "jest-transform-css",
+    "@stoplight/mosaic",
+    "@stoplight/mosaic-code-viewer",
+    "@stoplight/markdown-viewer"
   ]
 }

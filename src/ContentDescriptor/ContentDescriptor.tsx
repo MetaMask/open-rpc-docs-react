@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { ContentDescriptorObject } from '@open-rpc/meta-schema';
 import './ContentDescriptor.css';
 import MarkdownDescription from '../MarkdownDescription/MarkdownDescription';
-import { JsonSchemaViewer } from 'mm-json-schema-viewer/dist/index';
+import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
 
 interface IProps {
   contentDescriptor?: ContentDescriptorObject;
