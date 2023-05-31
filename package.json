@@ -57,7 +57,7 @@
     "@metamask/eslint-config-typescript": "^11.0.0",
     "@open-rpc/meta-schema": "^1.11.0",
     "@testing-library/react": "^11.2.2",
-    "@types/jest": "^28.1.6",
+    "@types/jest": "^29.5.0",
     "@types/json-schema": "^7.0.11",
     "@types/lodash": "^4.14.194",
     "@types/node": "^16",
