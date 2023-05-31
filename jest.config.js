@@ -102,7 +102,7 @@ module.exports = {
   transform: {
     '^.+\\.[tj]s$': 'ts-jest',
   },
-  transformIgnorePatterns: ['node_modules/(?!mm-json-schema-viewer)/'],
+  transformIgnorePatterns: ['node_modules/(?!@stoplight/json-schema-viewer)/'],
 
   moduleNameMapper: {
     '\\.(css|less|sass|scss)$': 'jest-transform-css',
