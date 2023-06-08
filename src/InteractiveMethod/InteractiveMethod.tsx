@@ -11,7 +11,6 @@ import FieldTemplate from "../FieldTemplate/FieldTemplate";
 const qs = require('qs');
 const { useHistory, useLocation } = require('@docusaurus/router');
 
-
 const log = (type: any) => console.log.bind(console, type);
 const uiSchema: UiSchema = {
   'ui:description': '',
