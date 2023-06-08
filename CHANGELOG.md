@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.3]
+### Uncategorized
+- Fixed error that happens with boolean schemas ([#10](https://github.com/MetaMask/openrpc-docs-react/pull/10))
+
 ## [0.0.2]
 ### Uncategorized
 - Change json-schema-viewer back to stoplight ([#7](https://github.com/MetaMask/openrpc-docs-react/pull/7))
@@ -290,6 +294,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - feat: add circle config with semantic release
 - feat: initial commit
 
-[Unreleased]: https://github.com/MetaMask/openrpc-docs-react/compare/v0.0.2...HEAD
+[Unreleased]: https://github.com/MetaMask/openrpc-docs-react/compare/v0.0.3...HEAD
+[0.0.3]: https://github.com/MetaMask/openrpc-docs-react/compare/v0.0.2...v0.0.3
 [0.0.2]: https://github.com/MetaMask/openrpc-docs-react/compare/v0.0.1...v0.0.2
 [0.0.1]: https://github.com/MetaMask/openrpc-docs-react/releases/tag/v0.0.1
