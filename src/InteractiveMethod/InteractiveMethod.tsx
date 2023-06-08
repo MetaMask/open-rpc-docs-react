@@ -11,6 +11,7 @@ import FieldTemplate from "../FieldTemplate/FieldTemplate";
 const qs = require('qs');
 const { useHistory, useLocation } = require('@docusaurus/router');
 
+
 const log = (type: any) => console.log.bind(console, type);
 const uiSchema: UiSchema = {
   'ui:description': '',
@@ -92,6 +93,9 @@ const InteractiveMethodParam: React.FC<ParamProps> = (props) => {
   const schema = traverse(
     param.schema,
     (s ) => {
+      if (typeof s === 'boolean') {
+        return s;
+      }
       s.description = undefined;
       s.summary = undefined;
       return s;
