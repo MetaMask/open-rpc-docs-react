@@ -20,6 +20,7 @@
     "build": "tsc --project tsconfig.build.json && cp src/ContentDescriptor/ContentDescriptor.css dist/ContentDescriptor/",
     "build:clean": "rimraf dist && yarn build",
     "build:docs": "typedoc",
+    "link:setup": "rm -rf ./node_modules/react ./node_modules/react-dom",
     "lint": "yarn lint:eslint && yarn lint:constraints && yarn lint:misc --check && yarn lint:dependencies --check && yarn lint:changelog",
     "lint:changelog": "auto-changelog validate",
     "lint:constraints": "yarn constraints",
