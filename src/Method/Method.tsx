@@ -57,7 +57,7 @@ const Method = ({method, uiSchema, key, methodPlugins, reactJsonOptions, onExamp
       className="method margin-bottom--sm"
     >
 
-      <h1 key={method.name} className="method-name" style={{ display: "inline", marginRight: "3px"}}>{method.name}</h1>
+      <h1 key={method.name} className="method-name" style={{ marginRight: "3px"}}>{method.name}</h1>
 
       {method.tags && method.tags.length > 0 && <section key="tags">
         <Tags tags={method.tags as any} />
