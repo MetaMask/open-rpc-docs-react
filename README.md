@@ -25,3 +25,9 @@ and then use it somewhere in a project:
 ```
 <Method method={method} />
 ```
+
+## Development
+
+### Linking
+
+When linking this project with others, use `yarn link:setup` to avoid getting errors about hooks / multiple react versions.
