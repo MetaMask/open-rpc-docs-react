@@ -64,24 +64,18 @@ T = any,
           registry={registry}
         />
 
-        {/* <ArrayFieldDescriptionTemplate
-            idSchema={idSchema}
-            description={uiOptions.description || schema.description}
-            schema={schema}
-            uiSchema={uiSchema}
-            registry={registry}
-            /> */}
-        <div className='col col--12 array-item-list'>
-          <div className='container'>
-            {items &&
-             items.map(({ key, ...itemProps }: ArrayFieldTemplateItemType<T, S, F>) => (
-               <ArrayFieldItemTemplate key={key} {...itemProps} />
-            ))}
-          </div>
+        <div className='array-item-list'>
+          {items &&
+           items.map(({ key, ...itemProps }: ArrayFieldTemplateItemType<T, S, F>) => (
+             <ArrayFieldItemTemplate key={key} {...itemProps} />
+          ))}
         </div>
 
         {canAdd && (
-          <div className="col col--12">
+          <div className="col col--12" style={{
+            justifyContent: 'end',
+            display: 'flex'
+          }}>
             <AddButton
               className='array-item-add'
               onClick={onAddClick}

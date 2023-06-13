@@ -19,8 +19,11 @@ export default function Label(props: LabelProps) {
   if (!label) {
     return null;
   }
+  if (/-\d+/.test(label) && id && /_\d+/.test(id)) {
+    return null;
+  }
   return (
-    <label className='control-label col col--2' htmlFor={id}>
+    <label className='control-label' htmlFor={id}>
       {label}
       {required && <span className='required'><b> (required)</b></span>}
     </label>

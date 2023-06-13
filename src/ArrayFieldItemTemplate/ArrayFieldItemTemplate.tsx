@@ -35,54 +35,50 @@ export default function ArrayFieldItemTemplate<
     fontWeight: 'bold',
   };
   return (
-    <div className={className + ' row'}>
+    <div className={className + ' row'} >
       <div className={hasToolbar ? 'col col--9' : 'col col--12'}>{children}</div>
       {hasToolbar && (
-        <div className='col col--3 array-item-toolbox'>
-          <div
-            className='btn-group'
-            style={{
-              display: 'flex',
-              justifyContent: 'space-around',
-            }}
-          >
-            {(hasMoveUp || hasMoveDown) && (
-              <MoveUpButton
-                style={btnStyle}
-                disabled={disabled || readonly || !hasMoveUp}
-                onClick={onReorderClick(index, index - 1)}
-                uiSchema={uiSchema}
-                registry={registry}
-              />
-            )}
-            {(hasMoveUp || hasMoveDown) && (
-              <MoveDownButton
-                style={btnStyle}
-                disabled={disabled || readonly || !hasMoveDown}
-                onClick={onReorderClick(index, index + 1)}
-                uiSchema={uiSchema}
-                registry={registry}
-              />
-            )}
-            {hasCopy && (
-              <CopyButton
-                style={btnStyle}
-                disabled={disabled || readonly}
-                onClick={onCopyIndexClick(index)}
-                uiSchema={uiSchema}
-                registry={registry}
-              />
-            )}
-            {hasRemove && (
-              <RemoveButton
-                style={btnStyle}
-                disabled={disabled || readonly}
-                onClick={onDropIndexClick(index)}
-                uiSchema={uiSchema}
-                registry={registry}
-              />
-            )}
-          </div>
+        <div className='col col--3 array-item-toolbox' style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+          {(hasMoveDown || hasMoveUp) && (
+            <MoveUpButton
+              style={btnStyle}
+              disabled={disabled || readonly || !hasMoveUp}
+              onClick={onReorderClick(index, index - 1)}
+              uiSchema={uiSchema}
+              registry={registry}
+            />
+          )}
+          {(hasMoveUp || hasMoveDown) && (
+            <MoveDownButton
+              style={btnStyle}
+              disabled={disabled || readonly || !hasMoveDown}
+              onClick={onReorderClick(index, index + 1)}
+              uiSchema={uiSchema}
+              registry={registry}
+            />
+          )}
+          {hasCopy && (
+            <CopyButton
+              style={btnStyle}
+              disabled={disabled || readonly}
+              onClick={onCopyIndexClick(index)}
+              uiSchema={uiSchema}
+              registry={registry}
+            />
+          )}
+          {hasRemove && (
+            <RemoveButton
+              style={btnStyle}
+              disabled={disabled || readonly}
+              onClick={onDropIndexClick(index)}
+              uiSchema={uiSchema}
+              registry={registry}
+            />
+          )}
         </div>
       )}
     </div>

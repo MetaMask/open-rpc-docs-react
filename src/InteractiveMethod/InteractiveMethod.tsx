@@ -8,6 +8,7 @@ import ArrayFieldTemplate from '../ArrayFieldTemplate/ArrayFieldTemplate';
 import ArrayFieldItemTemplate from '../ArrayFieldItemTemplate/ArrayFieldItemTemplate';
 import FieldErrorTemplate from "../FieldErrorTemplate/FieldErrorTemplate";
 import FieldTemplate from "../FieldTemplate/FieldTemplate";
+import ObjectFieldTemplate from "../ObjectFieldTemplate/ObjectFieldTemplate";
 const qs = require('qs');
 const { useHistory, useLocation } = require('@docusaurus/router');
 
@@ -27,55 +28,46 @@ interface Props {
   };
 }
 
-
-/* function ArrayFieldTemplate(props: ArrayFieldTemplateProps) {
- *   console.log(props);
- *   const ArrayFieldItemTemplateFromProps
- *   return (
- *     <div className="container">
- *       <div className="row">
- *         {props.title && <b className="col col--9">{props.title}</b>}
- *         {
- *           props.canAdd &&
- *           <div className="col col--3">
- *             <button className="button button--block button--outline button--primary" type='button' onClick={props.onAddClick}>+</button>
- *           </div>
- *         }
- *       </div>
- *
- *       <div className="row">
- *         <div className="col col--12">
- *           {props.items.map((element) => element.children)}
- *         </div>
- *       </div>
- *     </div>
- *   );
- * } */
-
 function AddButton(props: IconButtonProps) {
   const { icon, iconType, ...btnProps } = props;
   return (
-    <button {...btnProps} className={btnProps.className + " button button--outline button--primary"} type='button'>+</button>
+    <button {...btnProps} className={btnProps.className + " button button--primary"} type='button'>+</button>
   );
 }
 
 function RemoveButton(props: IconButtonProps) {
   const { icon, iconType, ...btnProps } = props;
+  const style = {
+    ...btnProps.style,
+    minWidth: '35px',
+    maxWidth: '36px',
+    border: undefined
+  };
   return (
-    <button {...btnProps} className="button button--outline button--primary" type='button'>-</button>
+    <button {...btnProps} style={style} className="button button--outline button--primary" type='button'>-</button>
   );
 }
 function MoveUpButton(props: IconButtonProps) {
   const { icon, iconType, ...btnProps } = props;
+  const style = {
+    ...btnProps.style,
+    minWidth: '35px',
+    maxWidth: '36px',
+  };
   return (
-    <button {...btnProps} className="button button--outline button--primary" type='button'>▲</button>
+    <button {...btnProps}  style={style} className="button button--outline button--primary" type='button'>▲</button>
   );
 }
 
 function MoveDownButton(props: IconButtonProps) {
   const { icon, iconType, ...btnProps } = props;
+  const style = {
+    ...btnProps.style,
+    minWidth: '35px',
+    maxWidth: '36px',
+  };
   return (
-    <button {...btnProps} className="button button--outline button--primary" type='button'>▼</button>
+    <button {...btnProps} style={style} className="button button--outline button--primary" type='button'>▼</button>
   );
 }
 
@@ -110,7 +102,14 @@ const InteractiveMethodParam: React.FC<ParamProps> = (props) => {
       uiSchema={uiSchema}
       validator={validator}
       ref={refref}
-      templates={{ArrayFieldItemTemplate, ArrayFieldTemplate, FieldErrorTemplate, FieldTemplate, ButtonTemplates:{ AddButton, RemoveButton, MoveUpButton, MoveDownButton } }}
+      templates={{
+        ArrayFieldItemTemplate,
+        ArrayFieldTemplate,
+        FieldErrorTemplate,
+        FieldTemplate,
+        ButtonTemplates:{ AddButton, RemoveButton, MoveUpButton, MoveDownButton },
+        ObjectFieldTemplate
+      }}
       onChange={props.onChange}
       onError={log('errors')}
       liveValidate
@@ -205,53 +204,59 @@ const InteractiveMethod: React.FC<Props> = (props) => {
   const jsCode = `await window.ethereum.request(${JSON.stringify(methodCall, null, "  ")});`;
 
   return (
-    <>
+    <div className="container">
       {method.params.length > 0 &&
       <>
-        <div>
+        <div className="row">
           <h3>Params</h3>
-          {method.params.map((p, i) => (
-            <>
-              <h4>{(p as ContentDescriptorObject).name}</h4>
-              <InteractiveMethodParam
-                refref={formRefs[i]}
-                formData={requestParams[(p as ContentDescriptorObject).name]}
-                onChange={(change) => handleChange(change, i)}
-                param={p as ContentDescriptorObject} />
-            </>
-          ))}
+          <div className="col col--12">
+            {method.params.map((p, i) => (
+              <>
+                <h4>{(p as ContentDescriptorObject).name}</h4>
+                <InteractiveMethodParam
+                  refref={formRefs[i]}
+                  formData={requestParams[(p as ContentDescriptorObject).name]}
+                  onChange={(change) => handleChange(change, i)}
+                  param={p as ContentDescriptorObject} />
+              </>
+            ))}
+          </div>
         </div>
         <br />
       </>
       }
-      <div>
+      <div className="row">
         <h3>Request</h3>
-        {components && components.CodeBlock && <components.CodeBlock className="language-js">{jsCode}</components.CodeBlock>}
-        {!components?.CodeBlock &&
-          <pre>
-            <code>
-              {jsCode}
-            </code>
-          </pre>
-        }
+        <div className="col col--12">
+          {components && components.CodeBlock && <components.CodeBlock className="language-js">{jsCode}</components.CodeBlock>}
+          {!components?.CodeBlock &&
+           <pre>
+             <code>
+               {jsCode}
+             </code>
+           </pre>
+          }
+        </div>
       </div>
-      {executionResult !== undefined && <div>
+      {executionResult !== undefined && <div className="row">
         <h3>Response</h3>
-        {components && components.CodeBlock && <components.CodeBlock className="language-json">{JSON.stringify(executionResult, null, '  ')}</components.CodeBlock>}
-        {!components?.CodeBlock &&
-          <pre>
-              <code>
-              {JSON.stringify(executionResult, null, '  ')}
-            </code>
-          </pre>
-        }
+        <div className="col col--12">
+          {components && components.CodeBlock && <components.CodeBlock className="language-json">{JSON.stringify(executionResult, null, '  ')}</components.CodeBlock>}
+          {!components?.CodeBlock &&
+           <pre>
+             <code>
+               {JSON.stringify(executionResult, null, '  ')}
+             </code>
+           </pre>
+          }
+        </div>
       </div>}
-      <div>
+      <div className="row">
         <button className="button button--primary button--block" onClick={handleExec}>
           Send Request
         </button>
       </div>
-    </>
+    </div>
   );
 
 }
