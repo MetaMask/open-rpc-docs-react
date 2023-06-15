@@ -1,6 +1,6 @@
 {
   "name": "@metamask/open-rpc-docs-react",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "OpenRPC Docs React",
   "homepage": "https://github.com/MetaMask/open-rpc-docs-react#readme",
   "bugs": {

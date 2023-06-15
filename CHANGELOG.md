@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.1]
+### Uncategorized
+- handle when meatamask is not installed ([#17](https://github.com/MetaMask/open-rpc-docs-react/pull/17))
+
 ## [0.1.0]
 ### Uncategorized
 - Fixed alignemnt of interactive method ([#15](https://github.com/MetaMask/open-rpc-docs-react/pull/15))
@@ -301,7 +305,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - feat: add circle config with semantic release
 - feat: initial commit
 
-[Unreleased]: https://github.com/MetaMask/open-rpc-docs-react/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/MetaMask/open-rpc-docs-react/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/MetaMask/open-rpc-docs-react/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/MetaMask/open-rpc-docs-react/compare/v0.0.3...v0.1.0
 [0.0.3]: https://github.com/MetaMask/open-rpc-docs-react/compare/v0.0.2...v0.0.3
 [0.0.2]: https://github.com/MetaMask/open-rpc-docs-react/compare/v0.0.1...v0.0.2
