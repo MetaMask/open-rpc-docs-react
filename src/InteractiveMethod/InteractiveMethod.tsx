@@ -79,6 +79,7 @@ interface ParamProps {
 const InteractiveMethodParam: React.FC<ParamProps> = (props) => {
 
   const {param, refref} = props;
+  const [metamaskInstalled, setMetamaskInstalled] = React.useState<boolean>(false);
 
   const schema = traverse(
     param.schema,
@@ -93,7 +94,10 @@ const InteractiveMethodParam: React.FC<ParamProps> = (props) => {
     { mutable: false }
   );
   schema.title = undefined;
-  const metamaskInstalled = typeof (window as any).ethereum !== 'undefined';
+  useEffect(() => {
+    const installed = !!(window as any)?.ethereum;
+    setMetamaskInstalled(installed);
+  }, []);
   return (
     <Form
       schema={schema}
@@ -153,6 +157,7 @@ const InteractiveMethod: React.FC<Props> = (props) => {
   const {method, components, selectedExamplePairing} = props;
   const [requestParams, setRequestParams] = React.useState<any>(queryString || {});
   const [executionResult, setExecutionResult] = React.useState<any>();
+  const [metamaskInstalled, setMetamaskInstalled] = React.useState<boolean>(false);
   const formRefs = method.params.map(() => createRef());
 
   useEffect(() => {
@@ -203,14 +208,17 @@ const InteractiveMethod: React.FC<Props> = (props) => {
 
   const jsCode = `await window.ethereum.request(${JSON.stringify(methodCall, null, "  ")});`;
 
-  const metamaskInstalled = !!(window as any).ethereum;
+  useEffect(() => {
+    const installed = !!(window as any)?.ethereum;
+    setMetamaskInstalled(installed);
+  }, []);
 
   return (
     <div className="container">
       {!metamaskInstalled &&
         <div className="row">
           <div className="alert alert--danger" role="alert">
-            Install MetaMask for your platform and refresh the page. The interactive features in this documentation require installing the <a target="_blank" href="https://metamask.io/download/">MetaMask extension.</a>
+            Install MetaMask for your platform and refresh the page. The interactive features in this documentation require installing <a target="_blank" href="https://metamask.io/download/">MetaMask</a>.
           </div>
           <br />
         </div>
@@ -218,14 +226,7 @@ const InteractiveMethod: React.FC<Props> = (props) => {
       {method.params.length > 0 &&
       <>
         <div className="row">
-          <div className="col col--8">
-            <h3>Params</h3>
-          </div>
-          <div className="col col--4">
-              <div className="button button--primary button--outline" onClick={() => {
-                setRequestParams({});
-              }}>Reset️</div>
-          </div>
+          <h3>Params</h3>
           <div className="col col--12">
             {method.params.map((p, i) => (
               <>
