@@ -12,7 +12,6 @@ import ObjectFieldTemplate from "../ObjectFieldTemplate/ObjectFieldTemplate";
 const qs = require('qs');
 const { useHistory, useLocation } = require('@docusaurus/router');
 
-const log = (type: any) => console.log.bind(console, type);
 const uiSchema: UiSchema = {
   'ui:description': '',
   "ui:submitButtonOptions": {
@@ -80,6 +79,7 @@ interface ParamProps {
 const InteractiveMethodParam: React.FC<ParamProps> = (props) => {
 
   const {param, refref} = props;
+  const [metamaskInstalled, setMetamaskInstalled] = React.useState<boolean>(false);
 
   const schema = traverse(
     param.schema,
@@ -94,6 +94,10 @@ const InteractiveMethodParam: React.FC<ParamProps> = (props) => {
     { mutable: false }
   );
   schema.title = undefined;
+  useEffect(() => {
+    const installed = !!(window as any)?.ethereum;
+    setMetamaskInstalled(installed);
+  }, []);
   return (
     <Form
       schema={schema}
@@ -102,6 +106,7 @@ const InteractiveMethodParam: React.FC<ParamProps> = (props) => {
       uiSchema={uiSchema}
       validator={validator}
       ref={refref}
+      disabled={!metamaskInstalled}
       templates={{
         ArrayFieldItemTemplate,
         ArrayFieldTemplate,
@@ -111,8 +116,7 @@ const InteractiveMethodParam: React.FC<ParamProps> = (props) => {
         ObjectFieldTemplate
       }}
       onChange={props.onChange}
-      onError={log('errors')}
-      liveValidate
+      liveValidate={metamaskInstalled}
     />
   );
 }
@@ -153,6 +157,7 @@ const InteractiveMethod: React.FC<Props> = (props) => {
   const {method, components, selectedExamplePairing} = props;
   const [requestParams, setRequestParams] = React.useState<any>(queryString || {});
   const [executionResult, setExecutionResult] = React.useState<any>();
+  const [metamaskInstalled, setMetamaskInstalled] = React.useState<boolean>(false);
   const formRefs = method.params.map(() => createRef());
 
   useEffect(() => {
@@ -203,8 +208,21 @@ const InteractiveMethod: React.FC<Props> = (props) => {
 
   const jsCode = `await window.ethereum.request(${JSON.stringify(methodCall, null, "  ")});`;
 
+  useEffect(() => {
+    const installed = !!(window as any)?.ethereum;
+    setMetamaskInstalled(installed);
+  }, []);
+
   return (
     <div className="container">
+      {!metamaskInstalled &&
+        <div className="row">
+          <div className="alert alert--danger" role="alert">
+            Install MetaMask for your platform and refresh the page. The interactive features in this documentation require installing <a target="_blank" href="https://metamask.io/download/">MetaMask</a>.
+          </div>
+          <br />
+        </div>
+      }
       {method.params.length > 0 &&
       <>
         <div className="row">
@@ -252,7 +270,7 @@ const InteractiveMethod: React.FC<Props> = (props) => {
         </div>
       </div>}
       <div className="row">
-        <button className="button button--primary button--block" onClick={handleExec}>
+        <button className="button button--primary button--block" onClick={handleExec} disabled={!metamaskInstalled}>
           Send Request
         </button>
       </div>
