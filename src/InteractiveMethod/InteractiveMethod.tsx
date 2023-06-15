@@ -12,7 +12,6 @@ import ObjectFieldTemplate from "../ObjectFieldTemplate/ObjectFieldTemplate";
 const qs = require('qs');
 const { useHistory, useLocation } = require('@docusaurus/router');
 
-const log = (type: any) => console.log.bind(console, type);
 const uiSchema: UiSchema = {
   'ui:description': '',
   "ui:submitButtonOptions": {
@@ -94,6 +93,7 @@ const InteractiveMethodParam: React.FC<ParamProps> = (props) => {
     { mutable: false }
   );
   schema.title = undefined;
+  const metamaskInstalled = typeof (window as any).ethereum !== 'undefined';
   return (
     <Form
       schema={schema}
@@ -102,6 +102,7 @@ const InteractiveMethodParam: React.FC<ParamProps> = (props) => {
       uiSchema={uiSchema}
       validator={validator}
       ref={refref}
+      disabled={!metamaskInstalled}
       templates={{
         ArrayFieldItemTemplate,
         ArrayFieldTemplate,
@@ -111,8 +112,7 @@ const InteractiveMethodParam: React.FC<ParamProps> = (props) => {
         ObjectFieldTemplate
       }}
       onChange={props.onChange}
-      onError={log('errors')}
-      liveValidate
+      liveValidate={metamaskInstalled}
     />
   );
 }
@@ -203,12 +203,29 @@ const InteractiveMethod: React.FC<Props> = (props) => {
 
   const jsCode = `await window.ethereum.request(${JSON.stringify(methodCall, null, "  ")});`;
 
+  const metamaskInstalled = !!(window as any).ethereum;
+
   return (
     <div className="container">
+      {!metamaskInstalled &&
+        <div className="row">
+          <div className="alert alert--danger" role="alert">
+            Install MetaMask for your platform and refresh the page. The interactive features in this documentation require installing the <a target="_blank" href="https://metamask.io/download/">MetaMask extension.</a>
+          </div>
+          <br />
+        </div>
+      }
       {method.params.length > 0 &&
       <>
         <div className="row">
-          <h3>Params</h3>
+          <div className="col col--8">
+            <h3>Params</h3>
+          </div>
+          <div className="col col--4">
+              <div className="button button--primary button--outline" onClick={() => {
+                setRequestParams({});
+              }}>Reset️</div>
+          </div>
           <div className="col col--12">
             {method.params.map((p, i) => (
               <>
@@ -252,7 +269,7 @@ const InteractiveMethod: React.FC<Props> = (props) => {
         </div>
       </div>}
       <div className="row">
-        <button className="button button--primary button--block" onClick={handleExec}>
+        <button className="button button--primary button--block" onClick={handleExec} disabled={!metamaskInstalled}>
           Send Request
         </button>
       </div>
