@@ -73,6 +73,7 @@ T = any,
 
         {canAdd && (
           <div className="col col--12" style={{
+            padding: '0',
             justifyContent: 'end',
             display: 'flex'
           }}>

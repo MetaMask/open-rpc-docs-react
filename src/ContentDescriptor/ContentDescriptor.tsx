@@ -30,7 +30,9 @@ class ContentDescriptor extends Component<IProps> {
           />
         )}
         {contentDescriptor.schema && (
-          <JsonSchemaViewer schema={contentDescriptor.schema} />
+          <div className="stoplight">
+            <JsonSchemaViewer schema={contentDescriptor.schema} />
+          </div>
         )}
       </div>
     );

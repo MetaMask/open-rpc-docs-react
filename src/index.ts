@@ -1,3 +1,5 @@
+// eslint-disable-next-line import/no-unassigned-import
+import './index.css';
 import Method from './Method/Method';
 
 export { default as ContentDescriptor } from './ContentDescriptor/ContentDescriptor';
