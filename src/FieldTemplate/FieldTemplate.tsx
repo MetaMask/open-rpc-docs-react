@@ -34,7 +34,7 @@ export default function FieldTemplate<
     <WrapIfAdditionalTemplate {...props}>
       {displayLabel && <Label label={label} required={required} id={id} />}
       {displayLabel && description ? description : null}
-      <div className='col col--12'>{children}</div>
+      {children}
       {errors}
       {help}
     </WrapIfAdditionalTemplate>

@@ -16,7 +16,7 @@ export default function FieldErrorTemplate<
   const id = errorId<T>(idSchema);
 
   return (
-    <div className="col col--12">
+    <div>
       {errors
         .filter((elem) => !!elem)
         .map((error, index: number) => {
