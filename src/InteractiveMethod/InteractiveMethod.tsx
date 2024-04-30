@@ -22,8 +22,9 @@ const uiSchema: UiSchema = {
 interface Props {
   method: MethodObject;
   selectedExamplePairing?: ExamplePairingObject;
+  requestTemplate: Record<string, string>;
   components?: {
-    CodeBlock: React.FC<{children: string, className?: string}>;
+    CodeBlock: React.FC<{children: JSX.Element | JSX.Element[] | string | undefined, className?: string}>;
   };
 }
 
@@ -158,6 +159,7 @@ const InteractiveMethod: React.FC<Props> = (props) => {
   const [requestParams, setRequestParams] = React.useState<any>(queryString || {});
   const [executionResult, setExecutionResult] = React.useState<any>();
   const [metamaskInstalled, setMetamaskInstalled] = React.useState<boolean>(false);
+  const [selectedTab, setSelectedTab] = React.useState<string>('js');
   const formRefs = method.params.map(() => createRef());
 
   useEffect(() => {
@@ -206,12 +208,30 @@ const InteractiveMethod: React.FC<Props> = (props) => {
     }
   };
 
-  const jsCode = `await window.ethereum.request(${JSON.stringify(methodCall, null, "  ")});`;
-
   useEffect(() => {
     const installed = !!(window as any)?.ethereum;
     setMetamaskInstalled(installed);
   }, []);
+
+
+  const addIndent = (str: string, indentLevel: number, skipFirst = true) => {
+    return str.split('\n').map((line, index: number) => {
+      if (index === 0 && skipFirst) {
+        return line;
+      }
+      return ' '.repeat(indentLevel) + line;
+    }).join('\n');
+  };
+
+  const processTemplateRequest = (template: string | undefined) => {
+    if (template === undefined) {
+      return '';
+    }
+    let returns = '';
+    returns = template.replace('${jsonRpcRequest}', addIndent(JSON.stringify(methodCall, null, 2), 4));
+    returns = returns.replace('${serverUrl}', "https://foo.bar");
+    return returns;
+  }
 
   return (
     <div className="container">
@@ -246,14 +266,26 @@ const InteractiveMethod: React.FC<Props> = (props) => {
       <div className="row">
         <h3>Request</h3>
         <div className="col col--12">
-          {components && components.CodeBlock && <components.CodeBlock className="language-js">{jsCode}</components.CodeBlock>}
-          {!components?.CodeBlock &&
-           <pre>
-             <code>
-               {jsCode}
-             </code>
-           </pre>
+          {Object.keys(props.requestTemplate).length !== 1 &&
+            <ul className="tabs">
+              {
+                Object.keys(props.requestTemplate).map((key) => {
+                  return (
+                      <li id={key} className={"tabs__item" + (selectedTab === key ? " tabs__item--active" : "")} onClick={() => setSelectedTab(key)}>
+                        {key}
+                      </li>
+                  )
+                })
+              }
+            </ul>
           }
+          <>
+            {components && components.CodeBlock &&
+              <components.CodeBlock className={`language-${selectedTab}`}>
+                {processTemplateRequest(props.requestTemplate[selectedTab])}
+              </components.CodeBlock>
+            }
+          </>
         </div>
       </div>
       {executionResult !== undefined && <div className="row">
