@@ -193,6 +193,20 @@ const InteractiveMethod: React.FC<Props> = (props) => {
     params: method.paramStructure === "by-name" ? requestParams : method.params.map((p, i) => requestParams[(p as ContentDescriptorObject).name] || undefined),
   };
 
+  const AsyncFunction = Object.getPrototypeOf(async function () {}).constructor
+
+  async function awaitFromString(handler: string) {
+    return new Promise((resolve, reject) => {
+      new AsyncFunction(
+        "resolve",
+        "reject",
+        `try {
+          const res = await ${handler};
+          resolve(res);
+        } catch (e) { reject(e); }`,
+      )(resolve, reject)
+    })
+  }
 
   const handleExec = async () => {
     // loop over refs
@@ -201,10 +215,17 @@ const InteractiveMethod: React.FC<Props> = (props) => {
     });
 
     try {
-      const response = await (window as any).ethereum.request(methodCall);
+      const req = processTemplateRequest(props.requestTemplate.js);
+      console.log('req', req);
+      const response = await awaitFromString(req);
+      console.log('response', response);
       setExecutionResult(response);
     } catch (e) {
-      setExecutionResult(e);
+      if ((e as unknown as any).code) {
+        setExecutionResult(e);
+      } else {
+        setExecutionResult((e as unknown as any).message);
+      }
     }
   };
 
