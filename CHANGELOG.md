@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0]
+### Uncategorized
+- feat(dependency): updated react version to 18 ([#30](https://github.com/MetaMask/open-rpc-docs-react/pull/30))
+
 ## [0.1.2]
 ### Uncategorized
 - Fixed stoplight css scoping ([#19](https://github.com/MetaMask/open-rpc-docs-react/pull/19))
@@ -309,7 +313,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - feat: add circle config with semantic release
 - feat: initial commit
 
-[Unreleased]: https://github.com/MetaMask/open-rpc-docs-react/compare/v0.1.2...HEAD
+[Unreleased]: https://github.com/MetaMask/open-rpc-docs-react/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/MetaMask/open-rpc-docs-react/compare/v0.1.2...v0.2.0
 [0.1.2]: https://github.com/MetaMask/open-rpc-docs-react/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/MetaMask/open-rpc-docs-react/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/MetaMask/open-rpc-docs-react/compare/v0.0.3...v0.1.0
