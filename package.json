@@ -55,7 +55,7 @@
     "@metamask/eslint-config": "^11.0.1",
     "@metamask/eslint-config-jest": "^11.0.0",
     "@metamask/eslint-config-nodejs": "^11.0.1",
-    "@metamask/eslint-config-typescript": "^11.0.0",
+    "@metamask/eslint-config-typescript": "^15.0.0",
     "@open-rpc/meta-schema": "^1.11.0",
     "@testing-library/react": "^11.2.2",
     "@types/jest": "^29.5.0",
